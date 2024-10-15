@@ -1,0 +1,8 @@
+.container {
+    cursor: ew-resize;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: -5px;
+    width: 7px;
+}

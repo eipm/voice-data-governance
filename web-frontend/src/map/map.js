@@ -2,8 +2,8 @@ import Leaflet from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { MAP_CONTAINER_ID } from "./constants";
-import mainSlice from "./mainSlice";
+import { MAP_CONTAINER_ID } from "../constants";
+import mainSlice from "../mainSlice";
 import "./mapSmoothZoom";
 
 let map = null;
@@ -21,6 +21,7 @@ export const useInitMap = () => {
             scrollWheelZoom: false,
             smoothWheelZoom: true,
             smoothSensitivity: 5,
+            worldCopyJump: true,
         });
 
         // Remove leaflet attribution
@@ -96,7 +97,7 @@ export const useRenderGeoJson = () => {
     return useCallback(
         (geoJson, options = {}) => {
             const strokeColor = options.strokeColor ?? "black";
-            const fillColor = options.fillColor ?? "green";
+            const fillColor = options.fillColor ?? "#A9D3DE";
             const fillOpacity = options.fillOpacity ?? 0.5;
             return createMapUtilityFunction(() => {
                 const geoJsonLayer = Leaflet.geoJson(geoJson, {
@@ -133,9 +134,12 @@ export const useFlyToBbox = () => {
 
 export const useFlyToPoint = () => {
     const createMapUtilityFunction = useCreateMapUtilityFunction();
-    return useCallback(() => {
-        return createMapUtilityFunction(() => {
-            // TODO
-        });
-    }, [createMapUtilityFunction]);
+    return useCallback(
+        (lon, lat, zoom, options = {}) => {
+            return createMapUtilityFunction(() => {
+                map.flyTo([lat, lon], zoom, options);
+            });
+        },
+        [createMapUtilityFunction],
+    );
 };

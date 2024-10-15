@@ -1,0 +1,13 @@
+.container {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 15px;
+}
+
+.title {
+    text-align: center;
+}
+
+.description {
+    margin-top: 10px;
+    white-space: pre-wrap;
+}

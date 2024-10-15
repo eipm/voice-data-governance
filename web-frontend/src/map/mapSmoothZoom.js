@@ -1,6 +1,6 @@
-import L from "leaflet";
-
 // Credit to https://github.com/mutsuyuki/Leaflet.SmoothWheelZoom
+
+import L from "leaflet";
 
 L.Map.mergeOptions({
     // @section Mousewheel options
