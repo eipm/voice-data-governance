@@ -1,0 +1,41 @@
+.container {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    background-color: purple;
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #03045e;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+    z-index: 999;
+}
+
+.headerText {
+    color: #fff;
+}
+
+.content {
+    flex: 1;
+    position: relative;
+}
+
+.map {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.globe {
+    color: white;
+    margin-right: 10px;
+}
