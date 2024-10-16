@@ -7,7 +7,7 @@ const getAbsolutePath = createGetAbsolutePath(import.meta.url);
 const INPUT_FILE = getAbsolutePath("./world-administrative-boundaries.json");
 const OUTPUT_FILE = getAbsolutePath("../dist/country-borders.json");
 
-export const processCountries = (stateDataFiles) => {
+export const processCountries = () => {
     const countriesDataRaw = JSON.parse(fs.readFileSync(INPUT_FILE));
     const countriesData = [];
     for (const countryDataRaw of countriesDataRaw) {
@@ -26,7 +26,6 @@ export const processCountries = (stateDataFiles) => {
                 countryDataRaw.geo_point_2d.lon,
                 countryDataRaw.geo_point_2d.lat,
             ],
-            hasStateData: countryDataRaw.iso3 in stateDataFiles,
         };
         countriesData.push(countryData);
     }

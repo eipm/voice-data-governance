@@ -3,11 +3,21 @@ import Card from "../Card/Card";
 import CountryInfo from "../CountryInfo/CountryInfo";
 import InfoCardResizeHandle from "../InfoCardResizeHandle/InfoCardResizeHandle";
 import ProjectInfo from "../ProjectInfo/ProjectInfo";
+import StateInfo from "../StateInfo/StateInfo";
 import styles from "./InfoCard.module.css";
 
 const InfoCard = () => {
-    const countryData = useSelector((state) => state.main.focusedCountry);
+    const focusedCountry = useSelector((state) => state.main.focusedCountry);
+    const focusedState = useSelector((state) => state.main.focusedState);
     const menuWidthPx = useSelector((state) => state.main.menuWidthPx);
+    let content;
+    if (focusedState) {
+        content = <StateInfo />;
+    } else if (focusedCountry) {
+        content = <CountryInfo />;
+    } else {
+        content = <ProjectInfo />;
+    }
     return (
         <Card style={{ width: `${menuWidthPx}px` }}>
             <InfoCardResizeHandle />
@@ -16,9 +26,7 @@ const InfoCard = () => {
                 <h1 className={styles.headerText}>Voice Atlas</h1>
                 <div className={styles.headerAccent} />
             </div>
-            <div className={styles.content}>
-                {countryData === null ? <ProjectInfo /> : <CountryInfo />}
-            </div>
+            <div className={styles.content}>{content}</div>
         </Card>
     );
 };

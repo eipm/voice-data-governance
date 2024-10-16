@@ -26,6 +26,10 @@ export const processStatesCAN = () => {
             stateCode: stateDataRaw.prov_code[0],
             geoJson: stateDataRaw.geo_shape,
             bbox: getBbox(stateDataRaw.geo_shape),
+            coordLonLat: [
+                stateDataRaw.geo_point_2d.lon,
+                stateDataRaw.geo_point_2d.lat,
+            ],
         };
         statesData.push(stateData);
     }

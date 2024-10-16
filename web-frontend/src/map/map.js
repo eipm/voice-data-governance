@@ -97,12 +97,14 @@ export const useRenderGeoJson = () => {
     return useCallback(
         (geoJson, options = {}) => {
             const strokeColor = options.strokeColor ?? "black";
+            const strokeWidth = options.strokeWidth ?? 2;
             const fillColor = options.fillColor ?? "#A9D3DE";
             const fillOpacity = options.fillOpacity ?? 0.5;
             return createMapUtilityFunction(() => {
                 const geoJsonLayer = Leaflet.geoJson(geoJson, {
                     style: {
                         color: strokeColor,
+                        weight: strokeWidth,
                         fillColor: fillColor,
                         fillOpacity: fillOpacity,
                     },
