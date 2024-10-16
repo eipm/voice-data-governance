@@ -1,7 +1,7 @@
 import isPointInPolygon from "@turf/boolean-point-in-polygon";
 
 // Load country data asynchronously
-const dataPromise = import("./country-boundaries-processed.json");
+const dataPromise = import("./country-borders.json");
 
 export const getCountryAtPoint = async (lon, lat) => {
     lon = fixLon(lon);
