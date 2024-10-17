@@ -33,3 +33,11 @@ p {
     padding: 0;
     line-height: 1.5;
 }
+
+#map {
+    cursor: crosshair;
+}
+
+#map .leaflet-interactive {
+    pointer-events: none;
+}

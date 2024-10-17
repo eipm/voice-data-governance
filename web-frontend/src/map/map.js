@@ -66,15 +66,19 @@ const useCreateMapUtilityFunction = () => {
             if (!isMapInitialized || map === null) {
                 return () => null;
             }
-            const cleanUpFn = fn();
-            return () => {
-                if (!isMapInitialized || map === null) {
-                    return;
-                }
-                if (cleanUpFn) {
-                    cleanUpFn();
-                }
-            };
+            const returnValue = fn();
+
+            // If return-value is a clean-up function, safeguard it as well
+            if (typeof returnValue === "function") {
+                return () => {
+                    if (!isMapInitialized || map === null) {
+                        return;
+                    }
+                    returnValue();
+                };
+            }
+
+            return returnValue;
         },
         [isMapInitialized],
     );
@@ -140,6 +144,46 @@ export const useFlyToPoint = () => {
         (lon, lat, zoom, options = {}) => {
             return createMapUtilityFunction(() => {
                 map.flyTo([lat, lon], zoom, options);
+            });
+        },
+        [createMapUtilityFunction],
+    );
+};
+
+export const useGetLonLatFromPoint = () => {
+    const createMapUtilityFunction = useCreateMapUtilityFunction();
+    return useCallback(
+        (x, y) => {
+            return createMapUtilityFunction(() => {
+                const point = Leaflet.point(x, y);
+                const latLng = map.containerPointToLatLng(point);
+                return [latLng.lng, latLng.lat];
+            });
+        },
+        [createMapUtilityFunction],
+    );
+};
+
+export const useGetPointFromLonLat = () => {
+    const createMapUtilityFunction = useCreateMapUtilityFunction();
+    return useCallback(
+        (lon, lat) => {
+            return createMapUtilityFunction(() => {
+                const point = map.latLngToContainerPoint([lat, lon]);
+                return [point.x, point.y];
+            });
+        },
+        [createMapUtilityFunction],
+    );
+};
+
+export const useAddMapEventListener = () => {
+    const createMapUtilityFunction = useCreateMapUtilityFunction();
+    return useCallback(
+        (eventName, callbackFn) => {
+            return createMapUtilityFunction(() => {
+                map.on(eventName, callbackFn);
+                return () => map.off(eventName, callbackFn);
             });
         },
         [createMapUtilityFunction],

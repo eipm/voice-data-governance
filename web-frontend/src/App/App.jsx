@@ -9,6 +9,7 @@ import mainSlice from "../mainSlice";
 import { useAddMapClickListener, useInitMap } from "../map/map";
 import { useFlyToEntity } from "../map/useFlyToEntity";
 import { useRenderFocusedCountryAndState } from "../map/useRenderFocusedCountryAndState";
+import { useShowHoveredEntity } from "../map/useShowHoveredEntity";
 import styles from "./App.module.css";
 
 const App = () => {
@@ -50,6 +51,9 @@ const App = () => {
         });
     }, [addMapClickListener, dispatch, flyToEntity, focusedCountry]);
 
+    // On map hover, show info pop-up
+    const hoveredEntity = useShowHoveredEntity();
+
     // Render the focused country
     const renderFocusedCountryAndState = useRenderFocusedCountryAndState();
     useEffect(
@@ -59,8 +63,9 @@ const App = () => {
 
     return (
         <div className={styles.container}>
-            <InfoCard />
             <div className={styles.map} id="map"></div>
+            {hoveredEntity}
+            <InfoCard />
         </div>
     );
 };
