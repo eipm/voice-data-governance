@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import {
     getCountryAtPoint,
@@ -12,47 +12,63 @@ import {
 import styles from "./HoveredEntity.module.css";
 
 const HoveredEntity = ({ x, y }) => {
+    // Is the map zooming / panning (disable hover detection during these animations)
+    const [isMapMoving, setIsMapMoving] = useState(false);
+    const [isMapZooming, setIsMapZooming] = useState(false);
+
     // Actively hovered country / state
     const [hoveredCountry, setHoveredCountry] = useState(null);
     const [hoveredState, setHoveredState] = useState(null);
 
-    // Function to determine hovered country / state
+    // Determine hovered country / state
     const focusedCountry = useSelector((state) => state.main.focusedCountry);
     const getLonLatFromPoint = useGetLonLatFromPoint();
-    const determineHoveredEntity = useCallback(async () => {
-        const coordLonLat = getLonLatFromPoint(x, y);
-        const lon = coordLonLat[0];
-        const lat = coordLonLat[1];
-        const hoveredCountry = await getCountryAtPoint(lon, lat);
-        setHoveredCountry(hoveredCountry);
-        if (
-            focusedCountry &&
-            hoveredCountry &&
-            focusedCountry.name === hoveredCountry.name &&
-            focusedCountry.statesData
-        ) {
-            const hoveredState = await getStateAtPoint(
-                lon,
-                lat,
-                focusedCountry.statesData,
-            );
-            setHoveredState(hoveredState);
-        }
-    }, [focusedCountry, getLonLatFromPoint, x, y]);
-
-    // Determine hovered country / state upon a change to the function dependencies
     useEffect(() => {
-        determineHoveredEntity();
-    }, [determineHoveredEntity]);
+        (async () => {
+            if (isMapMoving || isMapZooming) {
+                setHoveredCountry(null);
+                setHoveredState(null);
+                return;
+            }
+            const coordLonLat = getLonLatFromPoint(x, y);
+            const lon = coordLonLat[0];
+            const lat = coordLonLat[1];
+            const hoveredCountry = await getCountryAtPoint(lon, lat);
+            setHoveredCountry(hoveredCountry);
+            if (
+                focusedCountry &&
+                hoveredCountry &&
+                focusedCountry.name === hoveredCountry.name &&
+                focusedCountry.statesData
+            ) {
+                const hoveredState = await getStateAtPoint(
+                    lon,
+                    lat,
+                    focusedCountry.statesData,
+                );
+                setHoveredState(hoveredState);
+            }
+        })();
+    }, [focusedCountry, getLonLatFromPoint, isMapMoving, isMapZooming, x, y]);
 
-    // Re-determine hovered country / state upon zooming or panning map
+    // Disable hover-detection while map is panning / zooming
     const addMapEventListener = useAddMapEventListener();
-    useEffect(() => {
-        return addMapEventListener("moveend", () => determineHoveredEntity());
-    }, [addMapEventListener, determineHoveredEntity]);
-    useEffect(() => {
-        return addMapEventListener("zoomend", () => determineHoveredEntity());
-    }, [addMapEventListener, determineHoveredEntity]);
+    useEffect(
+        () => addMapEventListener("movestart", () => setIsMapMoving(true)),
+        [addMapEventListener],
+    );
+    useEffect(
+        () => addMapEventListener("moveend", () => setIsMapMoving(false)),
+        [addMapEventListener],
+    );
+    useEffect(
+        () => addMapEventListener("zoomstart", () => setIsMapZooming(true)),
+        [addMapEventListener],
+    );
+    useEffect(
+        () => addMapEventListener("zoomend", () => setIsMapZooming(false)),
+        [addMapEventListener],
+    );
 
     // Pop-up content for hovered country / state
     const content = useMemo(() => {
@@ -83,13 +99,15 @@ const HoveredEntity = ({ x, y }) => {
     useEffect(() => {
         if (hoveredState) {
             return renderGeoJson(hoveredState.geoJson, {
-                strokeColor: "#777",
+                strokeColor: "#000",
                 fillOpacity: 0,
+                strokeWidth: 3,
             });
         } else if (hoveredCountry) {
             return renderGeoJson(hoveredCountry.geoJson, {
-                strokeColor: "#777",
+                strokeColor: "#666",
                 fillOpacity: 0,
+                strokeWidth: 2,
             });
         }
     }, [hoveredCountry, hoveredState, renderGeoJson]);
