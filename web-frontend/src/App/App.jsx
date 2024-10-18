@@ -25,8 +25,8 @@ const App = () => {
     const focusedCountry = useSelector((state) => state.main.focusedCountry);
     useEffect(() => {
         return addMapClickListener(async (event) => {
-            const lon = event.latlng.lng;
-            const lat = event.latlng.lat;
+            const lon = event.lngLat.lng;
+            const lat = event.lngLat.lat;
             const country = await getCountryAtPoint(lon, lat);
             let state = null;
             if (

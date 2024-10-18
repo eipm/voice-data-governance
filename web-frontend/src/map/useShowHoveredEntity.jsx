@@ -4,7 +4,7 @@ import HoveredEntity from "../HoveredEntity/HoveredEntity";
 
 let showPopupTimeout = null;
 
-const DELAY_BEFORE_SHOWING_POPUP_MS = 50;
+const DELAY_BEFORE_SHOWING_POPUP_MS = 100;
 
 export const useShowHoveredEntity = () => {
     const [popUp, setPopUp] = useState(null);

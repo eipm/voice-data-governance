@@ -37,7 +37,3 @@ p {
 #map {
     cursor: crosshair;
 }
-
-#map .leaflet-interactive {
-    pointer-events: none;
-}

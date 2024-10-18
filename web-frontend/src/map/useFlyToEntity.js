@@ -30,11 +30,12 @@ const useFlyToPaddingOptions = () => {
     const menuWidthPx = useSelector((state) => state.main.menuWidthPx);
     return useMemo(() => {
         return {
-            paddingTopLeft: [
-                FLY_TO_PADDING_PX + menuWidthPx,
-                FLY_TO_PADDING_PX,
-            ],
-            paddingBottomRight: [FLY_TO_PADDING_PX, FLY_TO_PADDING_PX],
+            padding: {
+                top: FLY_TO_PADDING_PX,
+                right: FLY_TO_PADDING_PX,
+                bottom: FLY_TO_PADDING_PX,
+                left: FLY_TO_PADDING_PX + menuWidthPx,
+            },
         };
     }, [menuWidthPx]);
 };
