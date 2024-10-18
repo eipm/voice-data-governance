@@ -3,5 +3,5 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
     plugins: [react()],
-    base: "https://alexcrist.github.io/voice-atlas/",
+    base: "voicedatagovernance.com",
 });
