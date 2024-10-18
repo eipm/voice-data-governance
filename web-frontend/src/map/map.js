@@ -85,14 +85,14 @@ const DEFAULT_RENDER_GEO_JSON_OPTIONS = {
     strokeColor: "black",
     strokeOpacity: 1,
     strokeWidth: 2,
-    fillColor: "#A9D3DE",
+    fillColor: "white",
     fillOpacity: 0.5,
 };
 
 export const useRenderGeoJson = () => {
     const createMapUtilityFunction = useCreateMapUtilityFunction();
     return useCallback(
-        (geoJson, options = DEFAULT_RENDER_GEO_JSON_OPTIONS) => {
+        (geojson, options = DEFAULT_RENDER_GEO_JSON_OPTIONS) => {
             return createMapUtilityFunction(() => {
                 const getOption = (key) => {
                     return options[key] ?? DEFAULT_RENDER_GEO_JSON_OPTIONS[key];
@@ -100,7 +100,7 @@ export const useRenderGeoJson = () => {
                 const sourceId = `geo-json-${Math.random()}`;
                 const fillLayerId = `${sourceId}-fill`;
                 const strokeLayerId = `${sourceId}-stroke`;
-                map.addSource(sourceId, { type: "geojson", data: geoJson });
+                map.addSource(sourceId, { type: "geojson", data: geojson });
                 map.addLayer({
                     id: fillLayerId,
                     type: "fill",

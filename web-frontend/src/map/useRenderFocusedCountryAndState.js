@@ -1,70 +1,67 @@
 import { useCallback } from "react";
 import { useSelector } from "react-redux";
+import {
+    FOCUSED_ENTITY_FILL_COLOR,
+    FOCUSED_ENTITY_FILL_OPACITY,
+} from "../mapVisuals";
 import { useRenderGeoJson } from "./map";
 
-export const useRenderFocusedCountryAndState = () => {
-    const renderFocusedCountry = useRenderFocusedCountry();
-    const renderFocusedState = useRenderFocusedState();
+export const useRenderFocusedCountry = () => {
+    const renderGeoJson = useRenderGeoJson();
     const focusedCountry = useSelector((state) => state.main.focusedCountry);
-    const focusedState = useSelector((state) => state.main.focusedState);
+    const renderFocusedCountryStates = useRenderFocusedCountryStates();
     return useCallback(() => {
-        if (focusedCountry !== null && focusedState !== null) {
-            return renderFocusedState();
-        } else if (focusedCountry !== null && focusedState === null) {
-            return renderFocusedCountry();
+        if (focusedCountry === null) {
+            return () => null;
         }
-        return () => null;
-    }, [
-        focusedCountry,
-        focusedState,
-        renderFocusedCountry,
-        renderFocusedState,
-    ]);
+        const cleanUpFns = [];
+        const hasStates = !!focusedCountry.statesData;
+        cleanUpFns.push(
+            renderGeoJson(focusedCountry.geojson, {
+                fillColor: FOCUSED_ENTITY_FILL_COLOR,
+                fillOpacity: hasStates ? 0 : FOCUSED_ENTITY_FILL_OPACITY,
+            }),
+        );
+        cleanUpFns.push(renderFocusedCountryStates());
+        return () => cleanUpFns.forEach((cleanUpFn) => cleanUpFn());
+    }, [focusedCountry, renderFocusedCountryStates, renderGeoJson]);
 };
 
-const useRenderFocusedCountry = () => {
+export const useRenderFocusedCountryStates = () => {
     const renderGeoJson = useRenderGeoJson();
     const focusedCountry = useSelector((state) => state.main.focusedCountry);
     return useCallback(() => {
-        const cleanUpFns = [];
-        cleanUpFns.push(renderGeoJson(focusedCountry.geoJson));
-        if (focusedCountry.statesData) {
-            for (const stateData of focusedCountry.statesData) {
-                cleanUpFns.push(
-                    renderGeoJson(stateData.geoJson, {
-                        fillOpacity: 0,
-                        strokeWidth: 0.8,
-                    }),
-                );
-            }
+        if (!focusedCountry?.statesData) {
+            return () => null;
         }
-        return () => cleanUpFns.forEach((cleanUpFn) => cleanUpFn());
+        const geojson = {
+            type: "FeatureCollection",
+            features: focusedCountry.statesData.map((stateData) => {
+                return {
+                    ...stateData.geojson,
+                    properties: {
+                        color: "#ffffff",
+                    },
+                };
+            }),
+        };
+        return renderGeoJson(geojson, {
+            fillColor: ["get", "color"],
+            fillOpacity: 0,
+        });
     }, [focusedCountry, renderGeoJson]);
 };
 
-const useRenderFocusedState = () => {
+export const useRenderFocusedState = () => {
     const renderGeoJson = useRenderGeoJson();
-    const focusedCountry = useSelector((state) => state.main.focusedCountry);
     const focusedState = useSelector((state) => state.main.focusedState);
     return useCallback(() => {
-        const cleanUpFns = [];
-        cleanUpFns.push(renderGeoJson(focusedState.geoJson));
-        cleanUpFns.push(
-            renderGeoJson(focusedCountry.geoJson, {
-                fillOpacity: 0,
-                strokeWidth: 0.8,
-            }),
-        );
-        if (focusedCountry.statesData) {
-            for (const stateData of focusedCountry.statesData) {
-                cleanUpFns.push(
-                    renderGeoJson(stateData.geoJson, {
-                        fillOpacity: 0,
-                        strokeWidth: 0.8,
-                    }),
-                );
-            }
+        if (!focusedState) {
+            return () => null;
         }
-        return () => cleanUpFns.forEach((cleanUpFn) => cleanUpFn());
-    }, [focusedCountry, focusedState, renderGeoJson]);
+        return renderGeoJson(focusedState.geojson, {
+            fillColor: FOCUSED_ENTITY_FILL_COLOR,
+            fillOpacity: FOCUSED_ENTITY_FILL_OPACITY,
+        });
+    }, [focusedState, renderGeoJson]);
 };

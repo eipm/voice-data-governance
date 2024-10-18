@@ -20,7 +20,7 @@ export const processCountries = () => {
         const countryData = {
             name: countryDataRaw.name,
             codeIso3: countryDataRaw.iso3,
-            geoJson: countryDataRaw.geo_shape,
+            geojson: countryDataRaw.geo_shape,
             bbox: getBbox(countryDataRaw.geo_shape),
             coordLonLat: [
                 countryDataRaw.geo_point_2d.lon,

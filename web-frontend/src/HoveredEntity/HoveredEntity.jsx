@@ -9,6 +9,10 @@ import {
     useGetLonLatFromPoint,
     useRenderGeoJson,
 } from "../map/map";
+import {
+    HOVERED_COUNTRY_RENDER_GEOJSON_OPTIONS,
+    HOVERED_STATE_RENDER_GEOJSON_OPTIONS,
+} from "../mapVisuals";
 import styles from "./HoveredEntity.module.css";
 
 const HoveredEntity = ({ x, y }) => {
@@ -98,17 +102,15 @@ const HoveredEntity = ({ x, y }) => {
     const renderGeoJson = useRenderGeoJson();
     useEffect(() => {
         if (hoveredState) {
-            return renderGeoJson(hoveredState.geoJson, {
-                strokeColor: "#000",
-                fillOpacity: 0,
-                strokeWidth: 3,
-            });
+            return renderGeoJson(
+                hoveredState.geojson,
+                HOVERED_STATE_RENDER_GEOJSON_OPTIONS,
+            );
         } else if (hoveredCountry) {
-            return renderGeoJson(hoveredCountry.geoJson, {
-                strokeColor: "#666",
-                fillOpacity: 0,
-                strokeWidth: 2,
-            });
+            return renderGeoJson(
+                hoveredCountry.geojson,
+                HOVERED_COUNTRY_RENDER_GEOJSON_OPTIONS,
+            );
         }
     }, [hoveredCountry, hoveredState, renderGeoJson]);
 

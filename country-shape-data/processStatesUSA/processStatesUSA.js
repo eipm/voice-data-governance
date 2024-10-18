@@ -14,7 +14,7 @@ export const processStatesUSA = () => {
         const stateData = {
             name: stateDataRaw.name,
             stateCode: stateDataRaw.stusab,
-            geoJson: stateDataRaw.st_asgeojson,
+            geojson: stateDataRaw.st_asgeojson,
             bbox: getBbox(stateDataRaw.st_asgeojson),
             coordLonLat: [
                 stateDataRaw.geo_point_2d.lon,

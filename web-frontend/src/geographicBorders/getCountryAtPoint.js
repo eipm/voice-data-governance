@@ -10,7 +10,7 @@ export const getCountryAtPoint = async (lon, lat) => {
     const countriesData = await getCountryData();
     for (let i = 0; i < countriesData.length; i++) {
         const countryData = countriesData[i];
-        if (isPointInEntity(lon, lat, countryData.bbox, countryData.geoJson)) {
+        if (isPointInEntity(lon, lat, countryData.bbox, countryData.geojson)) {
             const countryWithStatesData =
                 await getCountryWithStatesData(countryData);
             return countryWithStatesData;
@@ -23,7 +23,7 @@ export const getStateAtPoint = async (lon, lat, statesData) => {
     lon = fixLon(lon);
     for (let i = 0; i < statesData.length; i++) {
         const stateData = statesData[i];
-        if (isPointInEntity(lon, lat, stateData.bbox, stateData.geoJson)) {
+        if (isPointInEntity(lon, lat, stateData.bbox, stateData.geojson)) {
             return stateData;
         }
     }
@@ -41,11 +41,11 @@ const fixLon = (lon) => {
     return lon;
 };
 
-const isPointInEntity = (lon, lat, bbox, geoJson) => {
+const isPointInEntity = (lon, lat, bbox, geojson) => {
     if (!isPointInBbox(lon, lat, bbox)) {
         return false;
     }
-    return isPointInPolygon([lon, lat], geoJson);
+    return isPointInPolygon([lon, lat], geojson);
 };
 
 const isPointInBbox = (lon, lat, bbox) => {

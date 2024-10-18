@@ -24,7 +24,7 @@ export const processStatesCAN = () => {
         const stateData = {
             name: stateDataRaw.prov_name_en[0],
             stateCode: stateDataRaw.prov_code[0],
-            geoJson: stateDataRaw.geo_shape,
+            geojson: stateDataRaw.geo_shape,
             bbox: getBbox(stateDataRaw.geo_shape),
             coordLonLat: [
                 stateDataRaw.geo_point_2d.lon,

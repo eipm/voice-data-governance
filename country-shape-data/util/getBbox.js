@@ -1,7 +1,7 @@
 import * as turf from "@turf/turf";
 
-export const getBbox = (geoJson) => {
-    const bbox = turf.bbox(geoJson);
+export const getBbox = (geojson) => {
+    const bbox = turf.bbox(geojson);
     const [minLon, minLat, maxLon, maxLat] = bbox;
     if (minLon === maxLon) {
         throw Error(`minLon === maxLon`);

@@ -8,7 +8,10 @@ import InfoCard from "../InfoCard/InfoCard";
 import mainSlice from "../mainSlice";
 import { useAddMapClickListener, useInitMap } from "../map/map";
 import { useFlyToEntity } from "../map/useFlyToEntity";
-import { useRenderFocusedCountryAndState } from "../map/useRenderFocusedCountryAndState";
+import {
+    useRenderFocusedCountry,
+    useRenderFocusedState,
+} from "../map/useRenderFocusedCountryAndState";
 import { useShowHoveredEntity } from "../map/useShowHoveredEntity";
 import styles from "./App.module.css";
 
@@ -55,11 +58,12 @@ const App = () => {
     const hoveredEntity = useShowHoveredEntity();
 
     // Render the focused country
-    const renderFocusedCountryAndState = useRenderFocusedCountryAndState();
-    useEffect(
-        () => renderFocusedCountryAndState(),
-        [renderFocusedCountryAndState],
-    );
+    const renderFocusedCountry = useRenderFocusedCountry();
+    useEffect(() => renderFocusedCountry(), [renderFocusedCountry]);
+
+    // Render the focused state
+    const renderFocusedState = useRenderFocusedState();
+    useEffect(() => renderFocusedState(), [renderFocusedState]);
 
     return (
         <div className={styles.container}>
