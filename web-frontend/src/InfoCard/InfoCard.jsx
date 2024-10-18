@@ -23,7 +23,7 @@ const InfoCard = () => {
             <InfoCardResizeHandle />
             <div className={styles.header}>
                 <div className={styles.headerAccent} />
-                <h1 className={styles.headerText}>Voice Atlas</h1>
+                <h1 className={styles.headerText}>Voice Data Governance</h1>
                 <div className={styles.headerAccent} />
             </div>
             <div className={styles.content}>{content}</div>
