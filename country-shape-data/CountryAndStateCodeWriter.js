@@ -10,7 +10,7 @@ export class CountryAndStateCodeWriter {
     }
 
     add(placeName, placeDataFilePath) {
-        this.fileData += `\n# ${placeName}\n\n`;
+        this.fileData += `\n## ${placeName}\n\n\`\`\``;
         const placeData = JSON.parse(fs.readFileSync(placeDataFilePath));
         const places = _(placeData)
             .map((item) => {
@@ -24,6 +24,7 @@ export class CountryAndStateCodeWriter {
         places.forEach((item) => {
             this.fileData += `${item.code} = ${_.padEnd(item.name, maxPlaceNameLength)}\n`;
         });
+        this.fileData += "```";
     }
 
     write() {

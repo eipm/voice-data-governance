@@ -19,7 +19,7 @@ const processFns = {
 };
 
 const codeWriter = new CountryAndStateCodeWriter(
-    getAbsolutePath("./dist/countryAndStateCodes.md"),
+    getAbsolutePath("./countryAndStateCodes.md"),
 );
 
 for (const key in processFns) {
