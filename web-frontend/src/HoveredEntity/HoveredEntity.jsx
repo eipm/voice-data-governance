@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import {
     getCountryAtPoint,
     getStateAtPoint,
-} from "../geographicBorders/getCountryAtPoint";
+} from "../entities/getEntityAtPoint";
 import {
     useAddMapEventListener,
     useGetLonLatFromPoint,

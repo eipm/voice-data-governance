@@ -8,9 +8,7 @@ import { createGetAbsolutePath } from "./util/absolutePath.js";
 
 const getAbsolutePath = createGetAbsolutePath(import.meta.url);
 
-const WEB_FRONTEND_DATA_PATH = getAbsolutePath(
-    "../web-frontend/src/geographicBorders",
-);
+const WEB_FRONTEND_DATA_PATH = getAbsolutePath("../web-frontend/src/entities");
 
 const processFns = {
     Countries: processCountries,

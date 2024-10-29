@@ -1,9 +1,5 @@
 import isPointInPolygon from "@turf/boolean-point-in-polygon";
-import {
-    getCountryData,
-    getHasStateData,
-    getStateData,
-} from "./geographicBorderData";
+import { getCountryData, getHasStateData, getStateData } from "./entityData";
 
 export const getCountryAtPoint = async (lon, lat) => {
     lon = fixLon(lon);

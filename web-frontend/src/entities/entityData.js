@@ -2,7 +2,7 @@
 
 const COUNTRY_DATA_PROMISE = import("./country-borders.json");
 
-const STATE_DATA_PROMISES = {
+export const STATE_DATA_PROMISES = {
     USA: import("./state-borders-usa.json"),
     CAN: import("./state-borders-can.json"),
 };

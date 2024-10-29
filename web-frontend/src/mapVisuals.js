@@ -7,21 +7,21 @@ export const COUNTRY_TEXT_COLOR = "#08254d";
 
 // Focused country / state visuals
 export const FOCUSED_ENTITY_FILL_COLOR = "#6EE143";
-export const FOCUSED_ENTITY_FILL_OPACITY = 0.5;
+export const FOCUSED_ENTITY_FILL_OPACITY = 0;
 
 // Hovered country visuals
 export const HOVERED_COUNTRY_RENDER_GEOJSON_OPTIONS = {
     fillColor: "#6EE143",
-    fillOpacity: 0.1,
-    strokeColor: "#666",
+    fillOpacity: 0,
+    strokeColor: "#000000",
     strokeOpacity: 1,
-    strokeWidth: 2.5,
+    strokeWidth: 3.5,
 };
 
 // Hovered state visuals
 export const HOVERED_STATE_RENDER_GEOJSON_OPTIONS = {
     fillColor: "#6EE143",
-    fillOpacity: 0.1,
+    fillOpacity: 0,
     strokeColor: "#000000",
     strokeOpacity: 1,
     strokeWidth: 3.5,

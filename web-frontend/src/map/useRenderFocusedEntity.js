@@ -20,6 +20,7 @@ export const useRenderFocusedCountry = () => {
             renderGeoJson(focusedCountry.geojson, {
                 fillColor: FOCUSED_ENTITY_FILL_COLOR,
                 fillOpacity: hasStates ? 0 : FOCUSED_ENTITY_FILL_OPACITY,
+                strokeWidth: 3,
             }),
         );
         cleanUpFns.push(renderFocusedCountryStates());
@@ -48,6 +49,7 @@ export const useRenderFocusedCountryStates = () => {
         return renderGeoJson(geojson, {
             fillColor: ["get", "color"],
             fillOpacity: 0,
+            strokeOpacity: 0.5,
         });
     }, [focusedCountry, renderGeoJson]);
 };
