@@ -4,6 +4,7 @@
         "start": "node index.js"
     },
     "dependencies": {
-        "@turf/turf": "^7.1.0"
+        "@turf/turf": "^7.1.0",
+        "lodash": "^4.17.21"
     }
 }

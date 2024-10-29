@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import { CountryAndStateCodeWriter } from "./CountryAndStateCodeWriter.js";
 import { processCountries } from "./processCountries/processCountries.js";
 import { processStatesCAN } from "./processStatesCAN/processStatesCAN.js";
 import { processStatesUSA } from "./processStatesUSA/processStatesUSA.js";
@@ -12,16 +13,21 @@ const WEB_FRONTEND_DATA_PATH = getAbsolutePath(
 );
 
 const processFns = {
+    Countries: processCountries,
     USA: processStatesUSA,
     CAN: processStatesCAN,
-    countries: processCountries,
 };
+
+const codeWriter = new CountryAndStateCodeWriter(
+    getAbsolutePath("./dist/countryAndStateCodes.md"),
+);
 
 for (const key in processFns) {
     const processFn = processFns[key];
     try {
         console.info(`\nProcessing data for ${key}...`);
         const outputPath = processFn();
+        codeWriter.add(key, outputPath);
         const fileName = path.basename(outputPath);
         fs.copyFileSync(
             outputPath,
@@ -33,4 +39,5 @@ for (const key in processFns) {
     }
 }
 
+codeWriter.write();
 console.info("\nDone.");
