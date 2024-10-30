@@ -169,6 +169,18 @@ export const useFlyToPoint = () => {
     );
 };
 
+export const useZoomTo = () => {
+    const createMapUtilityFunction = useCreateMapUtilityFunction();
+    return useCallback(
+        (zoom) => {
+            return createMapUtilityFunction(() => {
+                map.flyTo({ zoom });
+            });
+        },
+        [createMapUtilityFunction],
+    );
+};
+
 export const useGetLonLatFromPoint = () => {
     const createMapUtilityFunction = useCreateMapUtilityFunction();
     return useCallback(

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import mainSlice from "../mainSlice";
 import styles from "./InfoCardResizeHandle.module.css";
 
-const MIN_MENU_WIDTH_PX = 200;
+const MIN_MENU_WIDTH_PX = 350;
 const MAX_MENU_WIDTH_PERCENT = 0.8;
 
 const InfoCardResizeHandle = () => {

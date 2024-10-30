@@ -1,0 +1,74 @@
+.container {
+    margin-top: 10px;
+}
+
+.header {
+    background-color: black;
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    border-radius: 2px;
+}
+
+.title {
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 1.25;
+}
+
+.header:hover {
+    opacity: 0.5;
+}
+
+.isExpanded .header {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.details {
+    padding: 0 10px;
+    border: 2px solid black;
+    padding-bottom: 10px;
+}
+
+.details a {
+    word-break: break-all;
+}
+
+.categoryTitle {
+    font-size: 16px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.categoryRows {
+    border: 2px solid black;
+}
+
+.categoryRow {
+    font-size: 14px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    padding: 4px;
+}
+
+.categoryRowKey {
+    padding: 2px;
+    margin-right: 5px;
+    word-break: keep-all;
+    flex: 1;
+    font-weight: bold;
+    text-wrap: nowrap;
+}
+
+.categoryRowValue {
+    padding: 2px;
+    white-space: pre-wrap;
+}
+
+.isExpanded .arrow {
+    transform: rotate(180deg);
+}

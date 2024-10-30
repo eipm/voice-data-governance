@@ -32,11 +32,11 @@ const ALPHABET = [
 ];
 
 const CATEGORIES = {
-    INSTITUTIONAL_INFORMATION: "INSTITUTIONAL INFORMATION",
-    VOICE_DATASET_INFORMATION: "VOICE DATASET INFORMATION",
-    ACCESSIBILITY: "ACCESSIBILITY",
-    DEMOGRAPHIC_INFORMATION: "DEMOGRAPHIC INFORMATION",
-    TECHNICAL_INFORMATION: "TECHNICAL INFORMATION",
+    INSTITUTIONAL_INFORMATION: "Institutional Information",
+    VOICE_DATASET_INFORMATION: "Voice Dataset Information",
+    ACCESSIBILITY: "Accessibility",
+    DEMOGRAPHIC_INFORMATION: "Demographic Information",
+    TECHNICAL_INFORMATION: "Technical Information",
 };
 
 export const COUNTRY_CODE_COLUMN_NAME = "Country Code";
@@ -97,7 +97,11 @@ const COLUMNS = [
             if (!sourceUrl) {
                 return null;
             }
-            return <a href={sourceUrl}>{sourceUrl}</a>;
+            return (
+                <a href={sourceUrl} target="_" rel="noreferrer">
+                    {sourceUrl}
+                </a>
+            );
         },
     },
     {
@@ -166,12 +170,12 @@ const COLUMNS = [
         category: CATEGORIES.ACCESSIBILITY,
     },
     {
-        name: "Types of demographic data included",
+        name: "Types of Demographic Data",
         column: "U",
         category: CATEGORIES.DEMOGRAPHIC_INFORMATION,
     },
     {
-        name: "Recording Environment Type Described?",
+        name: "Recording Environment Described?",
         column: "W",
         category: CATEGORIES.TECHNICAL_INFORMATION,
     },

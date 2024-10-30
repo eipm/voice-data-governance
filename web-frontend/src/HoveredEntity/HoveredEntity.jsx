@@ -8,6 +8,7 @@ import {
     getCountryAtPoint,
     getStateAtPoint,
 } from "../entities/getEntityAtPoint";
+import { getStateWord } from "../entities/getStateWord";
 import {
     useAddMapEventListener,
     useGetLonLatFromPoint,
@@ -91,11 +92,11 @@ const HoveredEntity = ({ x, y }) => {
                 setContent({
                     title: `${hoveredState.name}, ${hoveredCountry.name}`,
                     descriptions: [
-                        `Number of datasets: ${numDatasets}`,
-                        `Name: ${hoveredState.name}`,
-                        `Code: ${hoveredState.stateCode}`,
-                        `Country name: ${hoveredCountry.name}`,
-                        `Country code: ${hoveredCountry.codeIso3}`,
+                        `Number of Datasets: ${numDatasets}`,
+                        `${getStateWord(hoveredCountry.codeIso3)} Name: ${hoveredState.name}`,
+                        `${getStateWord(hoveredCountry.codeIso3)} Code: ${hoveredState.stateCode}`,
+                        `Country Name: ${hoveredCountry.name}`,
+                        `Country Code: ${hoveredCountry.codeIso3}`,
                     ],
                 });
             }
@@ -108,9 +109,9 @@ const HoveredEntity = ({ x, y }) => {
                 setContent({
                     title: `${hoveredCountry.name}`,
                     descriptions: [
-                        `Number of datasets: ${numDatasets}`,
-                        `Name: ${hoveredCountry.name}`,
-                        `Code: ${hoveredCountry.codeIso3}`,
+                        `Number of Datasets: ${numDatasets}`,
+                        `Country Name: ${hoveredCountry.name}`,
+                        `Country Code: ${hoveredCountry.codeIso3}`,
                     ],
                 });
             }
@@ -121,8 +122,6 @@ const HoveredEntity = ({ x, y }) => {
             }
         })();
     }, [hoveredCountry, hoveredState]);
-
-    console.log("content", content);
 
     // Highlight hovered country / state
     const renderGeoJson = useRenderGeoJson();

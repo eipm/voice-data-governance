@@ -1,21 +1,39 @@
-import { useSelector } from "react-redux";
-import CardSection from "../CardSection/CardSection";
+import { useDispatch, useSelector } from "react-redux";
+import { getStateDatasets } from "../datasets/getEntityDatasets";
+import { getStateWord } from "../entities/getStateWord";
+import EntityInfo from "../EntityInfo/EntityInfo";
+import mainSlice from "../mainSlice";
+import { useFlyToEntity } from "../map/useFlyToEntity";
 
 const StateInfo = () => {
+    const dispatch = useDispatch();
+    const flyToEntity = useFlyToEntity();
     const focusedCountry = useSelector((state) => state.main.focusedCountry);
     const focusedState = useSelector((state) => state.main.focusedState);
+    if (!focusedCountry || !focusedState) {
+        return null;
+    }
+    const onClickBack = () => {
+        dispatch(mainSlice.actions.setFocusedState(null));
+        flyToEntity(focusedCountry);
+    };
     return (
-        <>
-            <CardSection
-                title={`${focusedState.name}, ${focusedCountry.name}`}
-                descriptions={[
-                    `Name: ${focusedState.name}`,
-                    `Code: ${focusedState.stateCode}`,
-                    `Country name: ${focusedCountry.name}`,
-                    `Country code: ${focusedCountry.codeIso3}`,
-                ]}
-            />
-        </>
+        <EntityInfo
+            title={`${focusedState.name}, ${focusedCountry.name}`}
+            extraDescriptions={[
+                `${getStateWord(focusedCountry.codeIso3)} Name: ${focusedState.name}`,
+                `${getStateWord(focusedCountry.codeIso3)} Code: ${focusedState.stateCode}`,
+                `Country Name: ${focusedCountry.name}`,
+                `Country Code: ${focusedCountry.codeIso3}`,
+            ]}
+            getDatasets={() =>
+                getStateDatasets(
+                    focusedCountry.codeIso3,
+                    focusedState.stateCode,
+                )
+            }
+            onClickBack={onClickBack}
+        />
     );
 };
 

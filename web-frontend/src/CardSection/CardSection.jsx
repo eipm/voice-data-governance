@@ -1,8 +1,8 @@
 import styles from "./CardSection.module.css";
 
-const CardSection = ({ title, descriptions }) => {
+const CardSection = ({ title, descriptions, children, className }) => {
     return (
-        <div className={styles.container}>
+        <div className={`${styles.container} ${className ?? ""}`}>
             {title !== undefined && <h2 className={styles.title}>{title}</h2>}
             {descriptions !== undefined &&
                 descriptions.map((description, index) => {
@@ -12,6 +12,7 @@ const CardSection = ({ title, descriptions }) => {
                         </p>
                     );
                 })}
+            {children}
         </div>
     );
 };
