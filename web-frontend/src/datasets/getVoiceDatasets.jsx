@@ -62,8 +62,10 @@ const COLUMNS = [
         name: "Country",
         column: COUNTRY_CODE_COLUMN,
         category: CATEGORIES.INSTITUTIONAL_INFORMATION,
-        transform: (countryCode) =>
-            getCountryFromCode(countryCode)?.name ?? null,
+        transform: async (countryCode) => {
+            const country = await getCountryFromCode(countryCode);
+            return country?.name ?? null;
+        },
     },
     {
         name: COUNTRY_CODE_COLUMN_NAME,
@@ -74,8 +76,10 @@ const COLUMNS = [
         name: "State",
         columns: [COUNTRY_CODE_COLUMN, STATE_CODE_COLUMN],
         category: CATEGORIES.INSTITUTIONAL_INFORMATION,
-        transform: ([countryCode, stateCode]) =>
-            getStateFromCode(countryCode, stateCode)?.name ?? null,
+        transform: async ([countryCode, stateCode]) => {
+            const state = await getStateFromCode(countryCode, stateCode);
+            return state?.name ?? null;
+        },
         hide: (value) => !value,
     },
     {

@@ -21,3 +21,10 @@
     overflow-y: auto;
     flex: 1;
 }
+
+.subheaderText {
+    line-height: 1.2;
+    margin-top: 7px;
+    font-size: 16px;
+    opacity: 0.5;
+}
