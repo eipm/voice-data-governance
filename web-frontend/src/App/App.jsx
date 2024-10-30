@@ -6,6 +6,7 @@ import {
     getStateAtPoint,
 } from "../entities/getEntityAtPoint";
 import InfoCard from "../InfoCard/InfoCard";
+import Legend from "../Legend/Legend";
 import mainSlice from "../mainSlice";
 import { useAddMapClickListener, useInitMap } from "../map/map";
 import { useFlyToEntity } from "../map/useFlyToEntity";
@@ -92,6 +93,7 @@ const App = () => {
             <div className={styles.map} id="map"></div>
             {hoveredEntity}
             <InfoCard />
+            <Legend />
         </div>
     );
 };

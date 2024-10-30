@@ -1,5 +1,9 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import {
+    getCountryNumDatasets,
+    getStateNumDatasets,
+} from "../datasets/getEntityDatasets";
 import {
     getCountryAtPoint,
     getStateAtPoint,
@@ -75,28 +79,50 @@ const HoveredEntity = ({ x, y }) => {
     );
 
     // Pop-up content for hovered country / state
-    const content = useMemo(() => {
-        if (hoveredCountry && hoveredState) {
-            return {
-                title: `${hoveredState.name}, ${hoveredCountry.name}`,
-                descriptions: [
-                    `Name: ${hoveredState.name}`,
-                    `Code: ${hoveredState.stateCode}`,
-                    `Country name: ${hoveredCountry.name}`,
-                    `Country code: ${hoveredCountry.codeIso3}`,
-                ],
-            };
-        } else if (hoveredCountry && !hoveredState) {
-            return {
-                title: `${hoveredCountry.name}`,
-                descriptions: [
-                    `Name: ${hoveredCountry.name}`,
-                    `Code: ${hoveredCountry.codeIso3}`,
-                ],
-            };
-        }
-        return null;
+    const [content, setContent] = useState(null);
+    useEffect(() => {
+        (async () => {
+            // State is being hovered
+            if (hoveredCountry && hoveredState) {
+                const numDatasets = await getStateNumDatasets(
+                    hoveredCountry.codeIso3,
+                    hoveredState.stateCode,
+                );
+                setContent({
+                    title: `${hoveredState.name}, ${hoveredCountry.name}`,
+                    descriptions: [
+                        `Number of datasets: ${numDatasets}`,
+                        `Name: ${hoveredState.name}`,
+                        `Code: ${hoveredState.stateCode}`,
+                        `Country name: ${hoveredCountry.name}`,
+                        `Country code: ${hoveredCountry.codeIso3}`,
+                    ],
+                });
+            }
+
+            // Country is being hovered
+            else if (hoveredCountry && !hoveredState) {
+                const numDatasets = await getCountryNumDatasets(
+                    hoveredCountry.codeIso3,
+                );
+                setContent({
+                    title: `${hoveredCountry.name}`,
+                    descriptions: [
+                        `Number of datasets: ${numDatasets}`,
+                        `Name: ${hoveredCountry.name}`,
+                        `Code: ${hoveredCountry.codeIso3}`,
+                    ],
+                });
+            }
+
+            // Nothing is being hovered
+            else {
+                setContent(null);
+            }
+        })();
     }, [hoveredCountry, hoveredState]);
+
+    console.log("content", content);
 
     // Highlight hovered country / state
     const renderGeoJson = useRenderGeoJson();

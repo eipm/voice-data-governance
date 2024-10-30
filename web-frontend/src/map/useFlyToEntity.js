@@ -29,12 +29,19 @@ export const useFlyToEntity = () => {
 const useFlyToPaddingOptions = () => {
     const menuWidthPx = useSelector((state) => state.main.menuWidthPx);
     return useMemo(() => {
+        const maxHorizontalPadding = (window.innerWidth - menuWidthPx) / 4;
+        const maxVerticalPadding = window.innerHeight / 4;
+        const horizontalPadding = Math.min(
+            maxHorizontalPadding,
+            FLY_TO_PADDING_PX,
+        );
+        const verticalPadding = Math.min(maxVerticalPadding, FLY_TO_PADDING_PX);
         return {
             padding: {
-                top: FLY_TO_PADDING_PX,
-                right: FLY_TO_PADDING_PX,
-                bottom: FLY_TO_PADDING_PX,
-                left: FLY_TO_PADDING_PX + menuWidthPx,
+                right: horizontalPadding,
+                left: horizontalPadding + menuWidthPx,
+                top: verticalPadding,
+                bottom: verticalPadding,
             },
         };
     }, [menuWidthPx]);
