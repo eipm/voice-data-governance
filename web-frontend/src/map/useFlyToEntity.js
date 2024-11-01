@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { useFlyToBbox, useFlyToPoint } from "./map";
 
@@ -28,9 +28,24 @@ export const useFlyToEntity = () => {
 
 const useFlyToPaddingOptions = () => {
     const menuWidthPx = useSelector((state) => state.main.menuWidthPx);
+    const [windowDims, setWindowDims] = useState({
+        width: window.innerWidth,
+        height: window.innerHeight,
+    });
+    useEffect(() => {
+        const onResize = () => {
+            setWindowDims({
+                width: window.innerWidth,
+                height: window.innerHeight,
+            });
+        };
+        window.addEventListener("resize", onResize);
+        return () => window.removeEventListener("resize", onResize);
+    }, []);
     return useMemo(() => {
-        const maxHorizontalPadding = (window.innerWidth - menuWidthPx) / 4;
-        const maxVerticalPadding = window.innerHeight / 4;
+        const { width, height } = windowDims;
+        const maxHorizontalPadding = (width - menuWidthPx) / 4;
+        const maxVerticalPadding = height / 4;
         const horizontalPadding = Math.min(
             maxHorizontalPadding,
             FLY_TO_PADDING_PX,
@@ -44,5 +59,5 @@ const useFlyToPaddingOptions = () => {
                 bottom: verticalPadding,
             },
         };
-    }, [menuWidthPx]);
+    }, [menuWidthPx, windowDims]);
 };

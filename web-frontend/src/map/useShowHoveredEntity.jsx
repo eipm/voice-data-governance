@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { addMouseMoveListener } from "../addMouseListener";
 import { MAP_CONTAINER_ID } from "../constants";
 import HoveredEntity from "../HoveredEntity/HoveredEntity";
 
@@ -10,7 +11,7 @@ export const useShowHoveredEntity = () => {
     const [popUp, setPopUp] = useState(null);
 
     useEffect(() => {
-        const onMouseMove = (event) => {
+        return addMouseMoveListener((event) => {
             if (showPopupTimeout) {
                 clearTimeout(showPopupTimeout);
             }
@@ -26,9 +27,7 @@ export const useShowHoveredEntity = () => {
                     );
                 }, DELAY_BEFORE_SHOWING_POPUP_MS);
             }
-        };
-        document.addEventListener("mousemove", onMouseMove);
-        return () => document.removeEventListener("mousemove", onMouseMove);
+        });
     }, []);
 
     return popUp;

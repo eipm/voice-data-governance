@@ -46,7 +46,7 @@ const Legend = () => {
                         }}
                     />
                 </div>
-                <div className={styles.legendItemText}>1 dataset</div>
+                <div className={styles.legendItemText}>1 Dataset</div>
             </div>
             <div className={styles.legendItem}>
                 <div className={styles.legendItemColor}>
@@ -62,7 +62,7 @@ const Legend = () => {
                     />
                 </div>
                 <div className={styles.legendItemText}>
-                    {maxNumDatasets} datasets
+                    {maxNumDatasets} Datasets
                 </div>
             </div>
         </Card>

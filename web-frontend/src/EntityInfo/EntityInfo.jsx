@@ -24,8 +24,6 @@ const EntityInfo = ({ title, extraDescriptions, getDatasets, onClickBack }) => {
                             <CollapsibleDataset
                                 dataset={dataset}
                                 key={`${index}-${dataset[0].value}`}
-                                index={index}
-                                numDatasets={numDatasets}
                             />
                         ))}
                     </CardSection>
