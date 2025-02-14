@@ -33,31 +33,35 @@ const ALPHABET = [
 
 const CATEGORIES = {
     INSTITUTIONAL_INFORMATION: "Institutional Information",
-    VOICE_DATASET_INFORMATION: "Voice Dataset Information",
+    DATASET_INFORMATION: "Dataset Information",
     ACCESSIBILITY: "Accessibility",
-    DEMOGRAPHIC_INFORMATION: "Demographic Information",
-    TECHNICAL_INFORMATION: "Technical Information",
 };
 
 export const COUNTRY_CODE_COLUMN_NAME = "Country Code";
 export const STATE_CODE_COLUMN_NAME = "State Code";
 
-const COUNTRY_CODE_COLUMN = "C";
+const COUNTRY_CODE_COLUMN = "B";
 const COUNTRY_CODE_COLUMN_INDEX = ALPHABET.indexOf(COUNTRY_CODE_COLUMN);
-const STATE_CODE_COLUMN = "D";
+const STATE_CODE_COLUMN = "C";
 const STATE_CODE_COLUMN_INDEX = ALPHABET.indexOf(STATE_CODE_COLUMN);
 
 const COLUMNS = [
+    // Hidden metadata
     {
         name: "Name of Dataset",
         column: "A",
-        category: CATEGORIES.INSTITUTIONAL_INFORMATION,
     },
     {
-        name: "Institution",
-        column: "F",
-        category: CATEGORIES.INSTITUTIONAL_INFORMATION,
+        name: COUNTRY_CODE_COLUMN_NAME,
+        column: COUNTRY_CODE_COLUMN,
     },
+    {
+        name: STATE_CODE_COLUMN_NAME,
+        column: STATE_CODE_COLUMN,
+        hide: (value) => !value,
+    },
+
+    // Institutional information
     {
         name: "Country",
         column: COUNTRY_CODE_COLUMN,
@@ -66,11 +70,6 @@ const COLUMNS = [
             const country = await getCountryFromCode(countryCode);
             return country?.name ?? null;
         },
-    },
-    {
-        name: COUNTRY_CODE_COLUMN_NAME,
-        column: COUNTRY_CODE_COLUMN,
-        category: CATEGORIES.INSTITUTIONAL_INFORMATION,
     },
     {
         name: "State",
@@ -83,19 +82,13 @@ const COLUMNS = [
         hide: (value) => !value,
     },
     {
-        name: STATE_CODE_COLUMN_NAME,
-        column: STATE_CODE_COLUMN,
-        category: CATEGORIES.INSTITUTIONAL_INFORMATION,
-        hide: (value) => !value,
-    },
-    {
         name: "Source",
-        column: "G",
+        column: "E",
         category: CATEGORIES.INSTITUTIONAL_INFORMATION,
     },
     {
-        name: "Source URL",
-        column: "H",
+        name: "URL",
+        column: "F",
         category: CATEGORIES.INSTITUTIONAL_INFORMATION,
         transform: (sourceUrl) => {
             if (!sourceUrl) {
@@ -108,95 +101,64 @@ const COLUMNS = [
             );
         },
     },
+
+    // Dataset information
     {
         name: "Number of Participants",
-        column: "I",
-        category: CATEGORIES.VOICE_DATASET_INFORMATION,
+        column: "G",
+        category: CATEGORIES.DATASET_INFORMATION,
     },
     {
         name: "Number of Samples",
-        column: "J",
-        category: CATEGORIES.VOICE_DATASET_INFORMATION,
-    },
-    {
-        name: "Disease Category",
-        column: "K",
-        category: CATEGORIES.VOICE_DATASET_INFORMATION,
-    },
-    {
-        name: "Diagnoses Represented",
-        column: "K",
-        category: CATEGORIES.VOICE_DATASET_INFORMATION,
-    },
-    {
-        name: "Speech Tasks",
-        column: "M",
-        category: CATEGORIES.VOICE_DATASET_INFORMATION,
+        column: "H",
+        category: CATEGORIES.DATASET_INFORMATION,
     },
     {
         name: "Language",
-        column: "N",
-        category: CATEGORIES.VOICE_DATASET_INFORMATION,
+        column: "L",
+        category: CATEGORIES.DATASET_INFORMATION,
+    },
+    {
+        name: "Disease Category",
+        column: "I",
+        category: CATEGORIES.DATASET_INFORMATION,
+    },
+    {
+        name: "Diagnoses",
+        column: "J",
+        category: CATEGORIES.DATASET_INFORMATION,
+    },
+    {
+        name: "Speech Task(s)",
+        column: "K",
+        category: CATEGORIES.DATASET_INFORMATION,
     },
     {
         name: "Speaker Details",
-        column: "O",
-        category: CATEGORIES.VOICE_DATASET_INFORMATION,
+        column: "M",
+        category: CATEGORIES.DATASET_INFORMATION,
     },
     {
-        name: "Type of Health Data Collected",
-        column: "P",
-        category: CATEGORIES.VOICE_DATASET_INFORMATION,
+        name: "Demographics",
+        column: "N",
+        category: CATEGORIES.DATASET_INFORMATION,
     },
-    {
-        name: "Dataset Description",
-        column: "B",
-        category: CATEGORIES.VOICE_DATASET_INFORMATION,
-    },
-    {
-        name: "Access Status",
-        column: "Q",
-        category: CATEGORIES.ACCESSIBILITY,
-    },
+
+    // Accessibility
     {
         name: "Accessibility",
-        column: "R",
+        column: "O",
         category: CATEGORIES.ACCESSIBILITY,
     },
     {
         name: "Access Instructions",
-        column: "S",
+        column: "P",
         category: CATEGORIES.ACCESSIBILITY,
     },
     {
-        name: "License Type",
-        column: "T",
+        name: "License Types",
+        column: "Q",
         category: CATEGORIES.ACCESSIBILITY,
-    },
-    {
-        name: "Types of Demographic Data",
-        column: "U",
-        category: CATEGORIES.DEMOGRAPHIC_INFORMATION,
-    },
-    {
-        name: "Recording Environment Described?",
-        column: "W",
-        category: CATEGORIES.TECHNICAL_INFORMATION,
-    },
-    {
-        name: "Microphone Type",
-        column: "V",
-        category: CATEGORIES.TECHNICAL_INFORMATION,
-    },
-    {
-        name: "Sampling Rate",
-        column: "X",
-        category: CATEGORIES.TECHNICAL_INFORMATION,
-    },
-    {
-        name: "Sampling Rate",
-        column: "X",
-        category: CATEGORIES.TECHNICAL_INFORMATION,
     },
 ];
 

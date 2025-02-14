@@ -19,10 +19,7 @@ const CountryInfo = () => {
     return (
         <EntityInfo
             title={focusedCountry.name}
-            extraDescriptions={[
-                `Country Name: ${focusedCountry.name}`,
-                `Country Code: ${focusedCountry.codeIso3}`,
-            ]}
+            extraDescriptions={[`Country Name: ${focusedCountry.name}`]}
             getDatasets={() => getCountryDatasets(focusedCountry.codeIso3)}
             onClickBack={onClickBack}
         />

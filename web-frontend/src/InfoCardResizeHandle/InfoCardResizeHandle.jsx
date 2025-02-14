@@ -8,7 +8,7 @@ const MIN_MENU_WIDTH_PX = 200;
 const MAX_MENU_WIDTH_PERCENT = 0.5;
 
 const getDefaultMenuWidthPx = () => {
-    return Math.max(Math.min(window.innerWidth * 0.5, 350), MIN_MENU_WIDTH_PX);
+    return Math.max(Math.min(window.innerWidth * 0.5, 500), MIN_MENU_WIDTH_PX);
 };
 
 const InfoCardResizeHandle = () => {

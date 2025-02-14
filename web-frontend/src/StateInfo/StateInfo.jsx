@@ -22,9 +22,7 @@ const StateInfo = () => {
             title={`${focusedState.name}, ${focusedCountry.name}`}
             extraDescriptions={[
                 `${getStateWord(focusedCountry.codeIso3)} Name: ${focusedState.name}`,
-                `${getStateWord(focusedCountry.codeIso3)} Code: ${focusedState.stateCode}`,
                 `Country Name: ${focusedCountry.name}`,
-                `Country Code: ${focusedCountry.codeIso3}`,
             ]}
             getDatasets={() =>
                 getStateDatasets(

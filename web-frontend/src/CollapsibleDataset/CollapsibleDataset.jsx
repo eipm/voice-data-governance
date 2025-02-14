@@ -6,7 +6,11 @@ import styles from "./CollapsibleDataset.module.css";
 const CollapsibleDataset = ({ dataset }) => {
     const [isExpanded, setIsExpanded] = useState(false);
     const details = useMemo(() => {
-        const categories = _(dataset).groupBy("category").entries().value();
+        const categories = _(dataset)
+            .groupBy("category")
+            .entries()
+            .filter(([category]) => category !== "undefined")
+            .value();
         return (
             <div className={styles.details}>
                 {categories.map(([category, rows], index) => {

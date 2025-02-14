@@ -112,15 +112,10 @@ const ProjectInfo = () => {
     return (
         <>
             <CardSection
-                title="Voice Atlas"
+                title="About"
                 descriptions={[
-                    "The Voice Atlas is a set of interactive maps that track different aspects of voice and speech data governance for health. The goal of the Atlas is to provide a diverse set of actors (researchers, developers, policymakers, regulators, industry stakeholders, etc.) with a frequently updated source of information about accessible voice datasets, regulation/policy regarding voice data governance, and other aspects of this emerging field.",
-                ]}
-            />
-            <CardSection
-                title="Speech and Voice Datasets Map"
-                descriptions={[
-                    "This map tracks speech and voice datasets that have been collected by different institutions for different disease cohorts that are accessible to researchers. The map includes information about the institution hosting the dataset, the speakers and voice samples in the datasets, the accessibility of the dataset, demographic information, and technical information.",
+                    "This map tracks publicly accessible speech and voice datasets collected for neurological, mood, and speech disorder research in different countries. Information about the institutional source of the datasets, the number of speakers, languages, and types of voice samples are included, but the focus of the map is on the governance of these voice datasets. The type of accessibility (open or safeguarded), access instructions, and licensing are detailed and can be compared between datasets, institutions, and countries/regions. This map complements a forthcoming searchable tool that can be used to find voice datasets specific to disease categories, diagnoses, or vocal tasks.",
+                    "In an upcoming iteration of the map, a research ethics element will be added to the dataset information, focusing on the informed consent process that participants went through to contribute their voice data. The aim is to provide information about the research ethics process and related documentation (e.g., consent forms, IRB/REB documentation) to make these datasets more easily useable for researchers whose institutions have stringent data governance requirements.",
                 ]}
             />
             <CardSection

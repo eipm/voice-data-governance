@@ -24,9 +24,11 @@ const InfoCard = () => {
             <div className={styles.header}>
                 <div className={styles.headerAccent} />
                 <div className={styles.headerTexts}>
-                    <h1 className={styles.headerText}>Voice Atlas</h1>
+                    <h1 className={styles.headerText}>
+                        Global Voice Datasets Repository Map
+                    </h1>
                     <h3 className={styles.subheaderText}>
-                        Speech and Voice Datasets Map
+                        Accessibility, Licensing, and Research Ethics
                     </h3>
                 </div>
                 <div className={styles.headerAccent} />
