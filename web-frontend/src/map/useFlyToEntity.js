@@ -19,7 +19,11 @@ export const useFlyToEntity = () => {
                 const [lon, lat] = entityData.coordLonLat;
                 flyToPoint(lon, lat, FLY_TO_POINT_ZOOM, { ...paddingOptions });
             } else {
-                flyToBbox(entityData.bbox, { ...paddingOptions });
+                // Note: flyToBbox has an issue (due to mapLibre map.fitBounds bug
+                // under the hood) where giving a paddingOptions will make it think
+                // a bbox near the international date line can't be flown too.
+                // Therefore, no padding is given here.
+                flyToBbox(entityData.bbox);
             }
         },
         [flyToBbox, flyToPoint, paddingOptions],
@@ -29,14 +33,14 @@ export const useFlyToEntity = () => {
 const useFlyToPaddingOptions = () => {
     const menuWidthPx = useSelector((state) => state.main.menuWidthPx);
     const [windowDims, setWindowDims] = useState({
-        width: window.innerWidth,
-        height: window.innerHeight,
+        width: document.body.clientWidth,
+        height: document.body.clientHeight,
     });
     useEffect(() => {
         const onResize = () => {
             setWindowDims({
-                width: window.innerWidth,
-                height: window.innerHeight,
+                width: document.body.clientWidth,
+                height: document.body.clientHeight,
             });
         };
         window.addEventListener("resize", onResize);

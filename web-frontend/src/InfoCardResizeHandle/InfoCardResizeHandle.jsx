@@ -8,7 +8,10 @@ const MIN_MENU_WIDTH_PX = 200;
 const MAX_MENU_WIDTH_PERCENT = 0.5;
 
 const getDefaultMenuWidthPx = () => {
-    return Math.max(Math.min(window.innerWidth * 0.5, 500), MIN_MENU_WIDTH_PX);
+    return Math.max(
+        Math.min(document.body.clientWidth * 0.5, 500),
+        MIN_MENU_WIDTH_PX,
+    );
 };
 
 const InfoCardResizeHandle = () => {
@@ -41,7 +44,7 @@ const InfoCardResizeHandle = () => {
                 const dX = event.clientX - dragStartPoint.x;
                 let newMenuWidthPx = startingMenuWidthPx + dX;
                 const maxMenuWidthPx =
-                    window.innerWidth * MAX_MENU_WIDTH_PERCENT;
+                    document.body.clientWidth * MAX_MENU_WIDTH_PERCENT;
                 newMenuWidthPx = Math.max(newMenuWidthPx, MIN_MENU_WIDTH_PX);
                 newMenuWidthPx = Math.min(newMenuWidthPx, maxMenuWidthPx);
                 dispatch(mainSlice.actions.setMenuWidthPx(newMenuWidthPx));
