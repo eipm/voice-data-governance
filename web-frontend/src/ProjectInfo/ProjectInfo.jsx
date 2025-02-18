@@ -6,6 +6,20 @@ const ProjectInfo = () => {
     const attributions = useMemo(() => {
         return [
             {
+                key: "This data in this map was compiled by Maria Powell and her team for a forthcoming publication",
+                value: (
+                    <>
+                        Powell, M.E., Salvi Cruz, S., Farb, A., Prasad
+                        Kodibagkar, A., Ghosh, S., Rudzicz, F., Rameau, A.,
+                        Bensoussan, Y., “Towards Protocol Harmonization: A
+                        Scoping Review of Publicly-Accessible Speech and Voice
+                        Datasets in Three Voice-Affecting Disease Cohorts,”
+                        <i>Journal of Speech, Language, and Hearing Research</i>
+                        , Forthcoming.
+                    </>
+                ),
+            },
+            {
                 key: "Country Borders (default)",
                 value: "MapLibre DemoTiles",
                 url: "https://demotiles.maplibre.org/style.json",
