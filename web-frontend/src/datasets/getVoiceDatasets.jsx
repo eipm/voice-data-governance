@@ -1,6 +1,6 @@
+import Papa from "papaparse";
 import { getHasStateData } from "../entities/entityData";
 import { getCountryFromCode, getStateFromCode } from "./getEntityFromCode";
-import voiceDatasetsCsv from "./voice-datasets-repository.csv";
 
 const ALPHABET = [
     "A",
@@ -233,6 +233,19 @@ const processRow = async (rawRow, index) => {
 
 const VOICE_DATASETS_PROMISE = (async () => {
     let voiceDatasets = [];
+    let voiceDatasetsCsv = [];
+    try {
+        const res = await fetch(
+            "https://docs.google.com/spreadsheets/d/e/2PACX-1vRhVfbSe0_jQBHdqbssbutK2n77y0KyB5Th2E70C3whkSoxMFnuBfkD7xjnHU1VIA/pub?gid=1792955439&single=true&output=csv",
+        );
+        const csvText = await res.text();
+        const { data } = Papa.parse(csvText);
+        voiceDatasetsCsv = data.slice(1);
+    } catch (error) {
+        alert("Error loading datasets CSV.");
+        console.error(error);
+    }
+    console.log("voiceDatasetsCsv", voiceDatasetsCsv);
     for (let i = 0; i < voiceDatasetsCsv.length; i++) {
         const rawRow = voiceDatasetsCsv[i];
         const row = await processRow(rawRow, i);
