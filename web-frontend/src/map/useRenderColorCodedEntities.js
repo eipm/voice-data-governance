@@ -14,8 +14,8 @@ import {
 } from "../entities/entityData";
 import { useRenderGeoJson } from "./map";
 
-const LOW_NUM_DATASETS_COLOR = "YELLOW";
-const HIGH_NUM_DATASETS_COLOR = "RED";
+export const LOW_NUM_DATASETS_COLOR = "#FFFF00";
+export const HIGH_NUM_DATASETS_COLOR = "#FF0000";
 export const NUM_DATASETS_FILL_OPACITY = 0.6;
 const NUM_DATASETS_STROKE_OPACITY = 0.5;
 const COLOR_SCALE = chroma.scale([

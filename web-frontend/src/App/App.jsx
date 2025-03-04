@@ -8,7 +8,8 @@ import {
 import InfoCard from "../InfoCard/InfoCard";
 import Legend from "../Legend/Legend";
 import mainSlice from "../mainSlice";
-import { useAddMapClickListener, useInitMap } from "../map/map";
+import { useAddMapClickListener } from "../map/map";
+import Map from "../map/Map/Map";
 import { useFlyToEntity } from "../map/useFlyToEntity";
 import {
     useRenderColorCodedCountries,
@@ -18,15 +19,10 @@ import {
     useRenderFocusedCountry,
     useRenderFocusedState,
 } from "../map/useRenderFocusedEntity";
-import { useShowHoveredEntity } from "../map/useShowHoveredEntity";
 import styles from "./App.module.css";
 
 const App = () => {
     const dispatch = useDispatch();
-
-    // Initialize the map
-    const initMap = useInitMap();
-    useEffect(() => initMap(), [initMap]);
 
     // On map click, set focused country
     const flyToEntity = useFlyToEntity();
@@ -61,9 +57,6 @@ const App = () => {
         });
     }, [addMapClickListener, dispatch, flyToEntity, focusedCountry]);
 
-    // On map hover, show info pop-up
-    const hoveredEntity = useShowHoveredEntity();
-
     // Color code countries based on number of datasets
     const renderColorCodedCountries = useRenderColorCodedCountries();
     useEffect(() => {
@@ -90,9 +83,8 @@ const App = () => {
 
     return (
         <div className={styles.container}>
-            <div className={styles.map} id="map"></div>
-            {hoveredEntity}
             <InfoCard />
+            <Map />
             <Legend />
         </div>
     );

@@ -21,10 +21,12 @@ export const useShowHoveredEntity = () => {
             );
             const isHoveringMap = !!mapContainerElement;
             if (isHoveringMap) {
+                const { top, left } =
+                    mapContainerElement.getBoundingClientRect();
+                const x = event.clientX - left;
+                const y = event.clientY - top;
                 showPopupTimeout = setTimeout(() => {
-                    setPopUp(
-                        <HoveredEntity x={event.clientX} y={event.clientY} />,
-                    );
+                    setPopUp(<HoveredEntity x={x} y={y} />);
                 }, DELAY_BEFORE_SHOWING_POPUP_MS);
             }
         });

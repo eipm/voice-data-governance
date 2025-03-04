@@ -17,7 +17,7 @@ import {
 import {
     HOVERED_COUNTRY_RENDER_GEOJSON_OPTIONS,
     HOVERED_STATE_RENDER_GEOJSON_OPTIONS,
-} from "../mapVisuals";
+} from "../map/mapVisuals";
 import styles from "./HoveredEntity.module.css";
 
 const HoveredEntity = ({ x, y }) => {

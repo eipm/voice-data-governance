@@ -245,7 +245,6 @@ const VOICE_DATASETS_PROMISE = (async () => {
         alert("Error loading datasets CSV.");
         console.error(error);
     }
-    console.log("voiceDatasetsCsv", voiceDatasetsCsv);
     for (let i = 0; i < voiceDatasetsCsv.length; i++) {
         const rawRow = voiceDatasetsCsv[i];
         const row = await processRow(rawRow, i);

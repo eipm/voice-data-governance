@@ -19,7 +19,10 @@ const InfoCard = () => {
         content = <ProjectInfo />;
     }
     return (
-        <Card style={{ width: `${menuWidthPx}px` }}>
+        <Card
+            className={styles.container}
+            style={{ width: `${menuWidthPx}px` }}
+        >
             <InfoCardResizeHandle />
             <div className={styles.header}>
                 <div className={styles.headerAccent} />

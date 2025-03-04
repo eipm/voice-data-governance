@@ -1,7 +1,8 @@
 import maplibre from "maplibre-gl";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { MAP_CONTAINER_ID } from "../constants";
+import { useCountryToDatasetsMap } from "../datasets/useCountryToDatasetsMap";
 import mainSlice from "../mainSlice";
 import { MAP_STYLE } from "./mapStyle";
 
@@ -11,7 +12,11 @@ export const getMap = () => map;
 
 export const useInitMap = () => {
     const dispatch = useDispatch();
-    return useCallback(() => {
+    const countryToDatasetsMap = useCountryToDatasetsMap();
+    useEffect(() => {
+        if (!countryToDatasetsMap) {
+            return;
+        }
         map = new maplibre.Map({
             container: MAP_CONTAINER_ID,
             style: MAP_STYLE,
@@ -19,8 +24,10 @@ export const useInitMap = () => {
             zoom: 2.5,
         });
 
-        // Set map as initialized
-        dispatch(mainSlice.actions.setIsMapInitialized(true));
+        // Set map as initialized upon loading
+        map.on("load", async () => {
+            dispatch(mainSlice.actions.setIsMapInitialized(true));
+        });
 
         // Clean up
         return () => {
@@ -28,7 +35,7 @@ export const useInitMap = () => {
             map.remove();
             map = null;
         };
-    }, [dispatch]);
+    }, [countryToDatasetsMap, dispatch]);
 };
 
 // Safeguards map utility functions from being called before the map has
@@ -58,6 +65,15 @@ const useCreateMapUtilityFunction = () => {
         },
         [isMapInitialized],
     );
+};
+
+export const useMapResize = () => {
+    const createMapUtilityFunction = useCreateMapUtilityFunction();
+    return useCallback(() => {
+        return createMapUtilityFunction(() => {
+            map.resize();
+        });
+    }, [createMapUtilityFunction]);
 };
 
 export const useAddMapEventListener = () => {

@@ -1,10 +1,10 @@
 import { useCallback } from "react";
 import { useSelector } from "react-redux";
+import { useRenderGeoJson } from "./map";
 import {
     FOCUSED_ENTITY_FILL_COLOR,
     FOCUSED_ENTITY_FILL_OPACITY,
-} from "../mapVisuals";
-import { useRenderGeoJson } from "./map";
+} from "./mapVisuals";
 
 export const useRenderFocusedCountry = () => {
     const renderGeoJson = useRenderGeoJson();

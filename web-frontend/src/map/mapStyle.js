@@ -4,7 +4,7 @@ import {
     COUNTRY_STROKE_COLOR,
     COUNTRY_TEXT_COLOR,
     OCEAN_FILL_COLOR,
-} from "../mapVisuals";
+} from "./mapVisuals";
 
 export const MAP_STYLE = {
     id: "43f36e14-e3f5-43c1-84c0-50a9c80dc5c7",

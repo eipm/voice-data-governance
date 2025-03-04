@@ -1,0 +1,8 @@
+.container {
+    flex: 1;
+    background: #ddd;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    min-width: 0;
+}
