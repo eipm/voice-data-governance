@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Card from "../Card/Card";
 import {
@@ -33,23 +33,12 @@ const Legend = () => {
         })();
     }, [focusedCountry]);
 
-    // Calculate color gradient string
-    const gradientString = useMemo(() => {
-        let gradientString = "";
-        const start = 0;
-        for (let i = start; i < maxNumDatasets; i++) {
-            if (i !== start) {
-                gradientString += ", ";
-            }
-            const color = getNumDatasetsColor(
-                i,
-                maxNumDatasets,
-                (x) => x ** 1.4,
-            );
-            gradientString += color;
-        }
-        return gradientString;
-    }, [maxNumDatasets]);
+    const isMapInitialized = useSelector(
+        (state) => state.main.isMapInitialized,
+    );
+    if (!isMapInitialized) {
+        return null;
+    }
 
     return (
         <Card className={styles.card}>

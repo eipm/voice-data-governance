@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import _ from "lodash";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
@@ -47,7 +48,9 @@ const Map = () => {
     return (
         <div className={styles.container} ref={ref}>
             <div
-                className={styles.map}
+                className={classNames(styles.map, {
+                    [styles.isMapInitialized]: isMapInitialized,
+                })}
                 id={MAP_CONTAINER_ID}
                 style={{
                     width: `${mapDims.width}px`,

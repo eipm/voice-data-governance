@@ -1,8 +1,24 @@
 .container {
     flex: 1;
-    background: #ddd;
+    background: #eee;
     align-items: center;
     justify-content: center;
     position: relative;
     min-width: 0;
+    display: flex;
+}
+
+.loading {
+    font-size: 16px;
+    color: #333;
+    font-style: italic;
+    text-align: center;
+}
+
+.map {
+    display: none;
+}
+
+.map.isMapInitialized {
+    display: block;
 }

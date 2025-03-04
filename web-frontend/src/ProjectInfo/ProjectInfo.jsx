@@ -125,6 +125,16 @@ const ProjectInfo = () => {
 
     return (
         <>
+            <div className={styles.header}>
+                <div className={styles.headerTexts}>
+                    <h1 className={styles.headerText}>
+                        Global Voice Datasets Repository Map
+                    </h1>
+                    <h3 className={styles.subheaderText}>
+                        Accessibility, Licensing, and Research Ethics
+                    </h3>
+                </div>
+            </div>
             <CardSection
                 title="About"
                 descriptions={[

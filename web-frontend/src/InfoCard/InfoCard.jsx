@@ -25,16 +25,11 @@ const InfoCard = () => {
         >
             <InfoCardResizeHandle />
             <div className={styles.header}>
-                <div className={styles.headerAccent} />
-                <div className={styles.headerTexts}>
-                    <h1 className={styles.headerText}>
-                        Global Voice Datasets Repository Map
-                    </h1>
-                    <h3 className={styles.subheaderText}>
-                        Accessibility, Licensing, and Research Ethics
-                    </h3>
-                </div>
-                <div className={styles.headerAccent} />
+                <img src="wave.png" className={styles.waveImage} />
+                <img
+                    src="bridge2aivoice.png"
+                    className={styles.bridge2AiImage}
+                />
             </div>
             <div className={styles.content}>{content}</div>
         </Card>
