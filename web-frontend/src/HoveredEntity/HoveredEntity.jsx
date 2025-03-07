@@ -18,6 +18,7 @@ import {
     HOVERED_COUNTRY_RENDER_GEOJSON_OPTIONS,
     HOVERED_STATE_RENDER_GEOJSON_OPTIONS,
 } from "../map/mapVisuals";
+import { getIsMobileDevice } from "../util/getIsMobileDevice";
 import styles from "./HoveredEntity.module.css";
 
 const HoveredEntity = ({ x, y }) => {
@@ -94,9 +95,7 @@ const HoveredEntity = ({ x, y }) => {
                     descriptions: [
                         `Number of Datasets: ${numDatasets}`,
                         `${getStateWord(hoveredCountry.codeIso3)} Name: ${hoveredState.name}`,
-                        `${getStateWord(hoveredCountry.codeIso3)} Code: ${hoveredState.stateCode}`,
                         `Country Name: ${hoveredCountry.name}`,
-                        `Country Code: ${hoveredCountry.codeIso3}`,
                     ],
                 });
             }
@@ -111,7 +110,6 @@ const HoveredEntity = ({ x, y }) => {
                     descriptions: [
                         `Number of Datasets: ${numDatasets}`,
                         `Country Name: ${hoveredCountry.name}`,
-                        `Country Code: ${hoveredCountry.codeIso3}`,
                     ],
                 });
             }
@@ -138,6 +136,11 @@ const HoveredEntity = ({ x, y }) => {
             );
         }
     }, [hoveredCountry, hoveredState, renderGeoJson]);
+
+    // Hide on mobile
+    if (getIsMobileDevice()) {
+        return null;
+    }
 
     if (content === null) {
         return null;

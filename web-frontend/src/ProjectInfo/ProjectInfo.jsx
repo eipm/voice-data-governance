@@ -20,14 +20,9 @@ const ProjectInfo = () => {
                 ),
             },
             {
-                key: "Country Borders (default)",
-                value: "MapLibre DemoTiles",
-                url: "https://demotiles.maplibre.org/style.json",
-            },
-            {
-                key: "Country Borders (hovered / focused)",
-                value: "World Administrative Boundaries",
-                url: "https://public.opendatasoft.com/explore/dataset/world-administrative-boundaries",
+                key: "Country Borders and Names",
+                value: "Natural Earth",
+                url: "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/",
             },
             {
                 key: "USA State Borders",

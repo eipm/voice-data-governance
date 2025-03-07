@@ -7,7 +7,7 @@ export const STATE_DATA_PROMISES = {
     CAN: import("./state-borders-can.json"),
 };
 
-export const getCountryData = async () => {
+export const getCountries = async () => {
     return (await COUNTRY_DATA_PROMISE).default;
 };
 

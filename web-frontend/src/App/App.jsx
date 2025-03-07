@@ -5,12 +5,13 @@ import {
     getCountryAtPoint,
     getStateAtPoint,
 } from "../entities/getEntityAtPoint";
+import Header from "../Header/Header";
 import InfoCard from "../InfoCard/InfoCard";
-import Legend from "../Legend/Legend";
 import mainSlice from "../mainSlice";
 import { useAddMapClickListener } from "../map/map";
 import Map from "../map/Map/Map";
 import { useFlyToEntity } from "../map/useFlyToEntity";
+import { useRenderBackgroundCountries } from "../map/useRenderBackgroundCountries";
 import {
     useRenderColorCodedCountries,
     useRenderColorCodedStates,
@@ -57,6 +58,9 @@ const App = () => {
         });
     }, [addMapClickListener, dispatch, flyToEntity, focusedCountry]);
 
+    // Render background country labels
+    useRenderBackgroundCountries();
+
     // Color code countries based on number of datasets
     const renderColorCodedCountries = useRenderColorCodedCountries();
     useEffect(() => {
@@ -83,9 +87,14 @@ const App = () => {
 
     return (
         <div className={styles.container}>
-            <InfoCard />
-            <Map />
-            <Legend />
+            <Header isMobile />
+            <div className={styles.content}>
+                <div className={styles.infoCardContainer}>
+                    <Header />
+                    <InfoCard />
+                </div>
+                <Map />
+            </div>
         </div>
     );
 };

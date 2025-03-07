@@ -2,30 +2,57 @@ import maplibre from "maplibre-gl";
 import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { MAP_CONTAINER_ID } from "../constants";
-import { useCountryToDatasetsMap } from "../datasets/useCountryToDatasetsMap";
+import { getCountryToDatasetsMap } from "../datasets/getEntityDatasets";
+import { getCountries } from "../entities/entityData";
 import mainSlice from "../mainSlice";
-import { MAP_STYLE } from "./mapStyle";
+import { useAsyncData } from "../util/useAsyncData";
+import { addZIndexLayers, MAP_Z_INDEX_1 } from "./addZIndexLayers";
+import { OCEAN_FILL_COLOR } from "./mapVisuals";
+
+export const MAP_DEFAULT_CENTER = [70, -31];
 
 let map = null;
 
 export const getMap = () => map;
 
+// TODO change country dataset to natural earth, update attributions
+
 export const useInitMap = () => {
     const dispatch = useDispatch();
-    const countryToDatasetsMap = useCountryToDatasetsMap();
+    const countryToDatasetsMap = useAsyncData(getCountryToDatasetsMap);
+    const countries = useAsyncData(getCountries);
     useEffect(() => {
-        if (!countryToDatasetsMap) {
+        if (!countries || !countryToDatasetsMap) {
             return;
         }
         map = new maplibre.Map({
             container: MAP_CONTAINER_ID,
-            style: MAP_STYLE,
-            center: [27, -17],
-            zoom: 2.5,
+            style: {
+                glyphs: "/{fontstack}/{range}.pbf",
+                layers: [
+                    {
+                        id: "background",
+                        type: "background",
+                        paint: { "background-color": OCEAN_FILL_COLOR },
+                    },
+                ],
+                sources: {},
+                version: 8,
+            },
+            center: MAP_DEFAULT_CENTER,
+            zoom: 2,
+        });
+
+        map.on("style.load", () => {
+            map.setProjection({
+                type: "globe", // Set projection to globe
+            });
         });
 
         // Set map as initialized upon loading
         map.on("load", async () => {
+            addZIndexLayers(map);
+            map.setCenter(MAP_DEFAULT_CENTER);
             dispatch(mainSlice.actions.setIsMapInitialized(true));
         });
 
@@ -35,7 +62,7 @@ export const useInitMap = () => {
             map.remove();
             map = null;
         };
-    }, [countryToDatasetsMap, dispatch]);
+    }, [countries, countryToDatasetsMap, dispatch]);
 };
 
 // Safeguards map utility functions from being called before the map has
@@ -64,6 +91,32 @@ const useCreateMapUtilityFunction = () => {
             return returnValue;
         },
         [isMapInitialized],
+    );
+};
+
+export const useSetMapLayoutProperty = () => {
+    const createMapUtilityFunction = useCreateMapUtilityFunction();
+    return useCallback(
+        (layerId, layoutKey, layoutValue) => {
+            return createMapUtilityFunction(() => {
+                map.setLayoutProperty(layerId, layoutKey, layoutValue);
+            });
+        },
+        [createMapUtilityFunction],
+    );
+};
+
+export const useAddMapLayer = () => {
+    const createMapUtilityFunction = useCreateMapUtilityFunction();
+    return useCallback(
+        (layer, zIndex) => {
+            return createMapUtilityFunction(() => {
+                const layerId = layer.id ?? `layer-${Math.random().toString()}`;
+                map.addLayer({ ...layer, id: layerId }, zIndex);
+                return () => map.removeLayer(layerId);
+            });
+        },
+        [createMapUtilityFunction],
     );
 };
 
@@ -103,6 +156,7 @@ const DEFAULT_RENDER_GEO_JSON_OPTIONS = {
     strokeWidth: 2,
     fillColor: "white",
     fillOpacity: 0.5,
+    zIndex: MAP_Z_INDEX_1,
 };
 
 export const useRenderGeoJson = () => {
@@ -116,26 +170,33 @@ export const useRenderGeoJson = () => {
                 const sourceId = `geo-json-${Math.random()}`;
                 const fillLayerId = `${sourceId}-fill`;
                 const strokeLayerId = `${sourceId}-stroke`;
+                const zIndex = getOption("zIndex");
                 map.addSource(sourceId, { type: "geojson", data: geojson });
-                map.addLayer({
-                    id: fillLayerId,
-                    type: "fill",
-                    source: sourceId,
-                    paint: {
-                        "fill-color": getOption("fillColor"),
-                        "fill-opacity": getOption("fillOpacity"),
+                map.addLayer(
+                    {
+                        id: fillLayerId,
+                        type: "fill",
+                        source: sourceId,
+                        paint: {
+                            "fill-color": getOption("fillColor"),
+                            "fill-opacity": getOption("fillOpacity"),
+                        },
                     },
-                });
-                map.addLayer({
-                    id: strokeLayerId,
-                    type: "line",
-                    source: sourceId,
-                    paint: {
-                        "line-color": getOption("strokeColor"),
-                        "line-opacity": getOption("strokeOpacity"),
-                        "line-width": getOption("strokeWidth"),
+                    zIndex,
+                );
+                map.addLayer(
+                    {
+                        id: strokeLayerId,
+                        type: "line",
+                        source: sourceId,
+                        paint: {
+                            "line-color": getOption("strokeColor"),
+                            "line-opacity": getOption("strokeOpacity"),
+                            "line-width": getOption("strokeWidth"),
+                        },
                     },
-                });
+                    zIndex,
+                );
                 return () => {
                     map.removeLayer(fillLayerId);
                     map.removeLayer(strokeLayerId);
@@ -147,7 +208,7 @@ export const useRenderGeoJson = () => {
     );
 };
 
-const DEFAULT_FLY_TO_BBOX_OPTIONS = { padding: 100 };
+const DEFAULT_FLY_TO_BBOX_OPTIONS = { duration: 500 };
 
 export const useFlyToBbox = () => {
     const createMapUtilityFunction = useCreateMapUtilityFunction();
@@ -188,9 +249,9 @@ export const useFlyToPoint = () => {
 export const useZoomTo = () => {
     const createMapUtilityFunction = useCreateMapUtilityFunction();
     return useCallback(
-        (zoom) => {
+        (zoom, duration = 500) => {
             return createMapUtilityFunction(() => {
-                map.flyTo({ zoom });
+                map.flyTo({ zoom, duration });
             });
         },
         [createMapUtilityFunction],

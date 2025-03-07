@@ -1,11 +1,14 @@
 import classNames from "classnames";
 import _ from "lodash";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { MAP_CONTAINER_ID } from "../../constants";
-import { useInitMap, useMapResize } from "../map";
+import Legend from "../../Legend/Legend";
+import { useFlyToBbox, useInitMap, useMapResize } from "../map";
 import { useShowHoveredEntity } from "../useShowHoveredEntity";
 import styles from "./Map.module.css";
+
+let hasTriggeredAnimation = false;
 
 const Map = () => {
     // Initialize the map
@@ -45,21 +48,60 @@ const Map = () => {
     // On map hover, show info pop-up
     const hoveredEntity = useShowHoveredEntity();
 
+    // Initialize with animation
+    const flyToBbox = useFlyToBbox();
+    useEffect(() => {
+        if (isMapInitialized && !hasTriggeredAnimation) {
+            hasTriggeredAnimation = true;
+            const bbox = [-120, -60, 40, 80];
+            flyToBbox(bbox, { duration: 4000 });
+        }
+    }, [flyToBbox, isMapInitialized]);
+
+    // Generate random stars
+    const stars = useMemo(() => {
+        return _.range(300).map(() => {
+            return {
+                x: Math.random() * 100,
+                y: Math.random() * 100,
+                blur: Math.random() ** 2 * 5 + 2,
+                size: Math.random() * 3,
+            };
+        });
+    }, []);
+
     return (
-        <div className={styles.container} ref={ref}>
+        <div
+            className={classNames(styles.container, {
+                [styles.isMapInitialized]: isMapInitialized,
+            })}
+            ref={ref}
+        >
+            {stars.map((star, index) => {
+                return (
+                    <div
+                        className={styles.star}
+                        key={`star-${index}`}
+                        style={{
+                            left: `${star.x}%`,
+                            top: `${star.y}%`,
+                            width: star.size,
+                            height: star.size,
+                            filter: `blur(${star.blur}px)`,
+                        }}
+                    />
+                );
+            })}
+            <div className={styles.loading}>Loading...</div>
             <div
-                className={classNames(styles.map, {
-                    [styles.isMapInitialized]: isMapInitialized,
-                })}
+                className={styles.map}
                 id={MAP_CONTAINER_ID}
                 style={{
                     width: `${mapDims.width}px`,
                     height: `${mapDims.height}px`,
                 }}
             />
-            {!isMapInitialized && (
-                <div className={styles.loading}>Loading...</div>
-            )}
+            <Legend />
             {hoveredEntity}
         </div>
     );

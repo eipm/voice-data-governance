@@ -1,9 +1,9 @@
 import isPointInPolygon from "@turf/boolean-point-in-polygon";
-import { getCountryData, getHasStateData, getStateData } from "./entityData";
+import { getCountries, getHasStateData, getStateData } from "./entityData";
 
 export const getCountryAtPoint = async (lon, lat) => {
     lon = fixLon(lon);
-    const countriesData = await getCountryData();
+    const countriesData = await getCountries();
     for (let i = 0; i < countriesData.length; i++) {
         const countryData = countriesData[i];
         if (isPointInEntity(lon, lat, countryData.bbox, countryData.geojson)) {

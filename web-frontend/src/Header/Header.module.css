@@ -1,0 +1,47 @@
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    box-shadow:
+        0 0px 20px rgba(0, 0, 0, 0.2),
+        0 0px 10px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    position: relative;
+    overflow: hidden;
+    height: 36px;
+    min-height: 36px;
+    z-index: 1000;
+}
+
+.bridge2AiImage {
+    margin-top: 3px;
+    width: calc(100% - 40px);
+    max-width: 165px;
+    z-index: 2;
+    mix-blend-mode: multiply;
+}
+
+.waveImage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    opacity: 0.22;
+    transform: rotate(180deg);
+}
+
+.container.isMobile {
+    display: none;
+}
+
+@media (max-aspect-ratio: 1) {
+    .container {
+        display: none;
+    }
+
+    .container.isMobile {
+        display: flex;
+    }
+}

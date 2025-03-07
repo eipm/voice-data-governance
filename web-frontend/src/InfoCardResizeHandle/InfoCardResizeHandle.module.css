@@ -6,3 +6,9 @@
     right: -5px;
     width: 7px;
 }
+
+@media (max-aspect-ratio: 1) {
+    .container {
+        display: none;
+    }
+}

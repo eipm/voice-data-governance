@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCountryDatasets } from "../datasets/getEntityDatasets";
 import EntityInfo from "../EntityInfo/EntityInfo";
 import mainSlice from "../mainSlice";
-import { useZoomTo } from "../map/map";
+import { getMap, useZoomTo } from "../map/map";
 
 const CountryInfo = () => {
     const zoomTo = useZoomTo();
@@ -14,7 +14,7 @@ const CountryInfo = () => {
     const onClickBack = () => {
         dispatch(mainSlice.actions.setFocusedCountry(null));
         dispatch(mainSlice.actions.setFocusedState(null));
-        zoomTo(1);
+        zoomTo(getMap().getZoom() - 0.3, 1000);
     };
     return (
         <EntityInfo

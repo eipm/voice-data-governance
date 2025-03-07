@@ -1,12 +1,12 @@
 import {
-    getCountryData,
+    getCountries,
     getHasStateData,
     STATE_DATA_PROMISES,
 } from "../entities/entityData";
 
 const COUNTRY_CODE_MAP_PROMISE = (async () => {
     const map = {};
-    const countryData = await getCountryData();
+    const countryData = await getCountries();
     countryData.forEach((country) => {
         map[country.codeIso3] = country;
     });

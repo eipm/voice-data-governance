@@ -24,13 +24,6 @@ const InfoCard = () => {
             style={{ width: `${menuWidthPx}px` }}
         >
             <InfoCardResizeHandle />
-            <div className={styles.header}>
-                <img src="wave.png" className={styles.waveImage} />
-                <img
-                    src="bridge2aivoice.png"
-                    className={styles.bridge2AiImage}
-                />
-            </div>
             <div className={styles.content}>{content}</div>
         </Card>
     );

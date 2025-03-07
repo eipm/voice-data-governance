@@ -8,10 +8,11 @@ import {
     getStateToNumDatasetsMap,
 } from "../datasets/getEntityDatasets";
 import {
-    getCountryData,
+    getCountries,
     getHasStateData,
     getStateData,
 } from "../entities/entityData";
+import { MAP_Z_INDEX_3 } from "./addZIndexLayers";
 import { useRenderGeoJson } from "./map";
 
 export const LOW_NUM_DATASETS_COLOR = "#FFFF00";
@@ -53,7 +54,7 @@ export const useRenderColorCodedCountries = () => {
                 type: "FeatureCollection",
                 features: [],
             };
-            const countriesData = await getCountryData();
+            const countriesData = await getCountries();
             for (const [countryCode, color] of Object.entries(countryColors)) {
                 const countryData = countriesData.find(
                     (countryData) => countryData.codeIso3 === countryCode,
@@ -78,6 +79,7 @@ export const useRenderColorCodedCountries = () => {
             fillColor: ["get", "color"],
             fillOpacity: NUM_DATASETS_FILL_OPACITY,
             strokeOpacity: NUM_DATASETS_STROKE_OPACITY,
+            zIndex: MAP_Z_INDEX_3,
         });
     }, [geojson, renderGeoJson]);
 };
@@ -141,6 +143,7 @@ export const useRenderColorCodedStates = () => {
             fillColor: ["get", "color"],
             fillOpacity: NUM_DATASETS_FILL_OPACITY,
             strokeOpacity: NUM_DATASETS_STROKE_OPACITY,
+            zIndex: MAP_Z_INDEX_3,
         });
     }, [geojson, renderGeoJson]);
 };
