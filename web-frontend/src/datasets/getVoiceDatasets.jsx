@@ -82,6 +82,11 @@ const COLUMNS = [
         hide: (value) => !value,
     },
     {
+        name: "Institution",
+        column: "D",
+        category: CATEGORIES.INSTITUTIONAL_INFORMATION,
+    },
+    {
         name: "Source",
         column: "E",
         category: CATEGORIES.INSTITUTIONAL_INFORMATION,

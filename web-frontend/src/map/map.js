@@ -41,6 +41,7 @@ export const useInitMap = () => {
             },
             center: MAP_DEFAULT_CENTER,
             zoom: 2,
+            minZoom: 1.5,
         });
 
         map.on("style.load", () => {
