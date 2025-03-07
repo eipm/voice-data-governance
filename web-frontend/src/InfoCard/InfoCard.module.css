@@ -1,10 +1,11 @@
 .container {
     position: relative;
+    overflow-y: auto;
+    overflow-x: hidden;
     flex: 1;
 }
 
 .content {
-    overflow-y: auto;
     flex: 1;
 }
 
