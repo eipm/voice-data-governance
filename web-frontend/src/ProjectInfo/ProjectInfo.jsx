@@ -141,8 +141,9 @@ const ProjectInfo = () => {
                 title="Contact"
                 descriptions={[
                     <>
-                        You can contact us with questions or comments by
-                        emailing{" "}
+                        You can contact us with questions, comments, or
+                        information about other voice datasets for health
+                        research by emailing:{" "}
                         <a
                             href="mailto:alden_blatter@sfu.ca"
                             target="_"
@@ -153,6 +154,29 @@ const ProjectInfo = () => {
                     </>,
                 ]}
             />
+            <CardSection
+                title="Suggested Citation"
+                descriptions={[
+                    <div
+                        key="suggested-citation"
+                        className={styles.suggestedCitation}
+                    >
+                        <div className={styles.suggestedCitationTitle}>
+                            To cite the Global Voice Datasets Repository Map,
+                            please use the following citation:
+                        </div>
+                        Alden Blatter, Hortense Gallois, Samantha Salvi Cruz,
+                        Yael Bensoussan, Bride2AI Voice Consortium, Maria
+                        Powell, Jean-Christophe Bélisle-Pipon. (2025). “Global
+                        Voice Datasets Repository Map.” Voice Data Governance.
+                        Retrieved Month Day, Year, from{" "}
+                        <a href="https://voicedatagovernance.com/">
+                            https://voicedatagovernance.com/
+                        </a>
+                        .
+                    </div>,
+                ]}
+            ></CardSection>
             <CardSection title="Attributions">
                 <div className={styles.attributions}>{attributions}</div>
             </CardSection>
