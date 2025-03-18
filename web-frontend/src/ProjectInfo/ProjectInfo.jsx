@@ -170,8 +170,8 @@ const ProjectInfo = () => {
                         Powell, Jean-Christophe Bélisle-Pipon. (2025). “Global
                         Voice Datasets Repository Map.” Voice Data Governance.
                         Retrieved Month Day, Year, from{" "}
-                        <a href="https://voicedatagovernance.com/">
-                            https://voicedatagovernance.com/
+                        <a href="https://map.b2ai-voice.org/">
+                            https://map.b2ai-voice.org/
                         </a>
                         .
                     </div>,

@@ -4,7 +4,7 @@
         "dev": "vite --open --host",
         "build": "vite build",
         "preview": "vite preview",
-        "deploy": "vite build && gh-pages -d dist --cname voicedatagovernance.com"
+        "deploy": "vite build && gh-pages -d dist --cname map.b2ai-voice.org"
     },
     "dependencies": {
         "@reduxjs/toolkit": "^2.2.7",
