@@ -166,7 +166,7 @@ const ProjectInfo = () => {
                             please use the following citation:
                         </div>
                         Alden Blatter, Hortense Gallois, Samantha Salvi Cruz,
-                        Yael Bensoussan, Bride2AI Voice Consortium, Maria
+                        Yael Bensoussan, Bridge2AI Voice Consortium, Maria
                         Powell, Jean-Christophe Bélisle-Pipon. (2025). “Global
                         Voice Datasets Repository Map.” Voice Data Governance.
                         Retrieved Month Day, Year, from{" "}
