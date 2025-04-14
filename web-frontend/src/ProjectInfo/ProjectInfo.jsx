@@ -189,7 +189,7 @@ const ProjectInfo = () => {
                         Yael Bensoussan, Bridge2AI Voice Consortium, Maria
                         Powell, Jean-Christophe Bélisle-Pipon. (2025). “Global
                         Voice Datasets Repository Map.” Voice Data Governance.
-                        Retrieved Month Day, Year, from{" "}
+                        Retrieved [Month Day, Year], from{" "}
                         <a href="https://map.b2ai-voice.org/">
                             https://map.b2ai-voice.org/
                         </a>
